@@ -1,0 +1,25 @@
+{
+  "name": "justread-api",
+  "version": "0.1.0",
+  "description": "JustRead API Server",
+  "main": "index.js",
+  "repository": "https://github.com/just-read/justread-api.git",
+  "author": "Flynn <wphestiraid@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts -e ts"
+  }
+}
