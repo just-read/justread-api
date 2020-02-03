@@ -3,8 +3,6 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 
-const PORT = process.env['PORT'] || 3000;
-
 const createApp = (): express.Application => {
   const app = express();
 
@@ -23,6 +21,6 @@ const createApp = (): express.Application => {
   return app;
 };
 
-createApp().listen(PORT, () =>
-  console.log(`JustRead API is running: http://localhost:${PORT}`)
-);
+const app = createApp();
+
+export default app;

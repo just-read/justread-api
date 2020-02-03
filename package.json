@@ -19,12 +19,14 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
+    "@types/aws-lambda": "^8.10.40",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "serverless-http": "^2.3.1"
   },
   "scripts": {
-    "dev": "nodemon --exec ts-node src/index.ts -e ts"
+    "dev:server": "nodemon --exec ts-node src/server.ts -e ts"
   }
 }
