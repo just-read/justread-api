@@ -1,0 +1,37 @@
+service: justread-api
+
+plugins:
+  - serverless-offline
+  - serverless-prune-plugin
+
+custom:
+  defaultStage: dev
+  currentStage: ${opt:stage, self:custom.defaultStage}
+  prune:
+    automatic: true
+    number: 3
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: ap-northeast-2
+  stage: ${self:custom.currentStage}
+  deploymentBucket:
+    name: justread-api
+  memorySize: 256
+  timeout: 3
+  environment:
+    TZ: Asia/Seoul
+
+functions:
+  app:
+    handler: build/serverless.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{any+}
+          method: ANY
+          cors: true
