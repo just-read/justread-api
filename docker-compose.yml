@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:10
+    restart: always
+    environment:
+      - POSTGRES_DB=justread
+      - POSTGRES_USER=justread
+      - POSTGRES_PASSWORD=justread-db
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: 'pg_isready -h localhost -p 5432 -q -U justread'
+      interval: 3s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: justread-api:0.1.0
+    container_name: justread-api
+    environment:
+      - PORT=4000
+    ports:
+      - '4000:4000'
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - ./src:/usr/app/src
+    environment:
+      - DB_ENDPOINT=db
+      - DB_USERNAME=justread
+      - DB_PASSWORD=justread-db
