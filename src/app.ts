@@ -2,8 +2,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
+import { createConnection } from 'typeorm';
+import connectionOptions from './ormConfig';
 
-const createApp = (): express.Application => {
+const createApp = async (): Promise<express.Application> => {
+  await createConnection(connectionOptions);
+
   const app = express();
 
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,6 +25,4 @@ const createApp = (): express.Application => {
   return app;
 };
 
-const app = createApp();
-
-export default app;
+export default createApp;

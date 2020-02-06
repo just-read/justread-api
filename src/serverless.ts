@@ -4,7 +4,7 @@ import {
   Context
 } from 'aws-lambda';
 import serverless from 'serverless-http';
-import app from './app';
+import createApp from './app';
 
 let serverlessApp: serverless.Handler;
 
@@ -13,6 +13,7 @@ export const handler = async (
   context: Context
 ): Promise<APIGatewayProxyResult> => {
   if (!serverlessApp) {
+    const app = await createApp();
     serverlessApp = serverless(app);
   }
   return serverlessApp(event, context);

@@ -1,7 +1,9 @@
-import app from './app';
+import createApp from './app';
 
-const PORT = process.env['PORT'] || 4000;
+const PORT: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 
-app.listen(PORT, () =>
-  console.log(`JustRead API is running: http://localhost:${PORT}`)
+createApp().then(app =>
+  app.listen(PORT, () =>
+    console.log(`JustRead API is running: http://localhost:${PORT}`)
+  )
 );
