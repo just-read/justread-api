@@ -4,6 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { createConnection } from 'typeorm';
 import connectionOptions from './ormConfig';
+import globalRouter from './routes/global';
 
 const createApp = async (): Promise<express.Application> => {
   await createConnection(connectionOptions);
@@ -15,12 +16,7 @@ const createApp = async (): Promise<express.Application> => {
   app.use(cors());
   app.use(morgan('combined'));
 
-  app.get('/', function(req, res) {
-    res.send({
-      success: true,
-      message: 'JustRead API'
-    });
-  });
+  app.use('', globalRouter);
 
   return app;
 };
