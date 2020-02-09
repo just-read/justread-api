@@ -25,7 +25,7 @@ class User extends BaseEntity {
   password!: string;
 
   @Column({ type: 'varchar', length: 30 })
-  name!: string;
+  nickName!: string;
 
   @Column({ type: 'varchar', length: 200, nullable: true })
   avatar?: string | null;
