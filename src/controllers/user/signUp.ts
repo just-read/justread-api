@@ -16,6 +16,7 @@ const signUp = async (req: SignUpRequest, res: Response): Promise<Response> => {
   } = req;
   const existingUser = await User.findOne({ email });
   if (existingUser) {
+    // TODO: 커스텀 에러로 대체 예정
     throw new Error('이미 존재하는 이메일입니다.');
   }
   const newUser = await User.create({ email, password, nickName }).save();
