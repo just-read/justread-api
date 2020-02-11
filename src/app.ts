@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import globalRouter from './routes/global';
+import { globalErrorHandler } from './utils/middlewares/globalErrorHandler';
 
 const createApp = async (): Promise<express.Application> => {
   const app = express();
@@ -13,6 +14,8 @@ const createApp = async (): Promise<express.Application> => {
   app.use(morgan('combined'));
 
   app.use('', globalRouter);
+
+  app.use(globalErrorHandler);
 
   return app;
 };
