@@ -40,6 +40,7 @@
   "scripts": {
     "build": "tsc",
     "dev:server": "nodemon --exec ts-node src/server.ts -e ts",
-    "dev:serverless": "yarn build && sls offline start"
+    "dev:serverless": "yarn build && sls offline start",
+    "dev:docker": "docker-compose up --build"
   }
 }
