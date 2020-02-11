@@ -8,8 +8,11 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.40",
+    "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.2",
+    "@types/jsonwebtoken": "^8.3.7",
     "@types/morgan": "^1.7.37",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
@@ -23,9 +26,6 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
-    "@types/aws-lambda": "^8.10.40",
-    "@types/bcrypt": "^3.0.0",
-    "@types/jsonwebtoken": "^8.3.7",
     "bcrypt": "^3.0.8",
     "body-parser": "^1.19.0",
     "class-validator": "^0.11.0",
