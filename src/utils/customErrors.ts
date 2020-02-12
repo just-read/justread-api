@@ -1,25 +1,37 @@
-class AlreadyExistsError extends Error {
+class CustomError extends Error {
   status: number;
 
-  constructor(message: string, status = 409) {
+  constructor(message: string, status: number) {
     super(message);
+    this.status = status;
+  }
+}
+
+class AlreadyExistsError extends CustomError {
+  constructor(message: string, status = 409) {
+    super(message, status);
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, AlreadyExistsError);
     }
-    this.status = status;
   }
 }
 
-class NotFoundError extends Error {
-  status: number;
-
+class NotFoundError extends CustomError {
   constructor(message: string, status = 404) {
-    super(message);
+    super(message, status);
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, NotFoundError);
     }
-    this.status = status;
   }
 }
 
-export { AlreadyExistsError, NotFoundError };
+class InvalidParamError extends CustomError {
+  constructor(message: string, status = 400) {
+    super(message, status);
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, InvalidParamError);
+    }
+  }
+}
+
+export { AlreadyExistsError, NotFoundError, InvalidParamError };
