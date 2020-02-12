@@ -34,4 +34,13 @@ class InvalidParamError extends CustomError {
   }
 }
 
-export { AlreadyExistsError, NotFoundError, InvalidParamError };
+class IncorrectLoginRequestError extends CustomError {
+  constructor(message: string, status = 401) {
+    super(message, status);
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, InvalidParamError);
+    }
+  }
+}
+
+export { AlreadyExistsError, NotFoundError, InvalidParamError, IncorrectLoginRequestError };

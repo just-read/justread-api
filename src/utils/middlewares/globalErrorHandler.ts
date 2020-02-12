@@ -6,6 +6,7 @@ const globalErrorHandler = (
   res: Response,
   next: NextFunction
 ): void => {
+  console.error(error);
   if ('status' in error) {
     res.status(error['status']);
   } else {

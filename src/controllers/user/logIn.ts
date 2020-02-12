@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../../entities/user';
 import { createToken } from '../../utils/auth';
-import { NotFoundError, InvalidParamError } from '../../utils/customErrors';
+import { NotFoundError, IncorrectLoginRequestError } from '../../utils/customErrors';
 
 interface LogInRequest extends Request {
   body: {
@@ -20,7 +20,7 @@ const logIn = async (req: LogInRequest, res: Response): Promise<Response> => {
   }
   const checkPassword = await user.comparePassword(password);
   if (!checkPassword) {
-    throw new InvalidParamError('입력하신 정보가 올바르지 않습니다.');
+    throw new IncorrectLoginRequestError('입력하신 정보가 올바르지 않습니다.');
   }
   const token = createToken(user);
   return res.status(200).json({
