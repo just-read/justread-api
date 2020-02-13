@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import signUp from '../controllers/user/signUp';
-import logIn from '../controllers/user/logIn';
+import signUp from '../../controllers/user/signUp';
+import logIn from '../../controllers/user/logIn';
 
 const userRouter = Router();
 

@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import userRouter from './user';
+import v1Router from './v1';
 
 const globalRouter = Router();
 
@@ -10,6 +10,6 @@ globalRouter.get('/', (_: Request, res: Response) => {
   });
 });
 
-globalRouter.use('/user', userRouter);
+globalRouter.use('/v1', v1Router);
 
 export default globalRouter;
