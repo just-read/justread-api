@@ -6,7 +6,7 @@
 
 ### API 응답
 
-공통 유형은 아래와 같으며 각 API마다 `result`의 객체만 표시해 두었음. 요청이 실패할 경우의 모든 응답은 `result` 값이 `null`로 처리함.
+공통 유형은 아래와 같으며 각 API마다 `result`의 객체만 표시해 두었음.
 
 | 키        | 데이터 타입        | 설명                 |
 | --------- | ------------------ | -------------------- |
@@ -14,15 +14,31 @@
 | `message` | `string` or `null` | 응답 메세지(에러 등) |
 | `result`  | `object` or `null` | 응답 오브젝트        |
 
-```json
-{
-  "success": true,
-  "message": null,
-  "result": {
-    // API 응답 객체
+- 성공시
+
+  성공시 `HTTP Status Code`는 200대로 응답
+
+  ```json
+  {
+    "success": true,
+    "message": null,
+    "result": {
+      // API 응답 객체
+    }
   }
-}
-```
+  ```
+
+- 실패시
+
+  실패시 `HTTP Status Code`는 실패 사유에 따라 부여
+
+  ```json
+  {
+    "success": false,
+    "message": "에러 메세지",
+    "result": null
+  }
+  ```
 
 ## 사용자
 
@@ -31,7 +47,7 @@
 #### 요청
 
 ```
-{{API_URL}}/v1/user/signup
+POST {{API_URL}}/v1/user/signup
 ```
 
 | 파라미터   | 파라미터 유형 | 데이터 타입 | 필수 여부 | 설명     |
@@ -57,7 +73,7 @@
 #### 요청
 
 ```
-{{API_URL}}/v1/user/login
+POST {{API_URL}}/v1/user/login
 ```
 
 | 파라미터   | 파라미터 유형 | 데이터 타입 | 필수 여부 | 설명     |
