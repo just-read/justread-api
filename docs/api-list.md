@@ -3,6 +3,7 @@
 - [사용자](#사용자)
 - [회원 가입](#회원-가입)
 - [로그인](#로그인)
+- [토큰 갱신](#토큰-갱신)
 
 ### API 응답
 
@@ -58,13 +59,15 @@ POST {{API_URL}}/v1/users/signup
 
 #### 응답
 
-| 키      | 데이터 타입 | 설명      |
-| ------- | ----------- | --------- |
-| `token` | `string`    | 인증 토큰 |
+| 키             | 데이터 타입 | 설명          |
+| -------------- | ----------- | ------------- |
+| `accessToken`  | `string`    | 인증 토큰     |
+| `refreshToken` | `string`    | 리프레시 토큰 |
 
 ```json
 {
-  "token": "TOKEN STRING HERE"
+  "accessToken": "ACCESS TOKEN STRING HERE",
+  "refreshToken": "REFRESH TOKEN STRING HERE"
 }
 ```
 
@@ -83,13 +86,41 @@ POST {{API_URL}}/v1/users/login
 
 #### 응답
 
-| 키      | 데이터 타입 | 설명      |
-| ------- | ----------- | --------- |
-| `token` | `string`    | 인증 토큰 |
+| 키             | 데이터 타입 | 설명          |
+| -------------- | ----------- | ------------- |
+| `accessToken`  | `string`    | 인증 토큰     |
+| `refreshToken` | `string`    | 리프레시 토큰 |
 
 ```json
 {
-  "token": "TOKEN STRING HERE"
+  "accessToken": "ACCESS TOKEN STRING HERE",
+  "refreshToken": "REFRESH TOKEN STRING HERE"
+}
+```
+
+### 토큰 갱신
+
+#### 요청
+
+```
+POST {{API_URL}}/v1/users/tokens
+```
+
+| 파라미터       | 파라미터 유형 | 데이터 타입 | 필수 여부 | 설명          |
+| -------------- | ------------- | ----------- | --------- | ------------- |
+| `refreshToken` | `body`        | `string`    | ✅        | 리프레시 토큰 |
+
+#### 응답
+
+| 키             | 데이터 타입 | 설명          |
+| -------------- | ----------- | ------------- |
+| `accessToken`  | `string`    | 인증 토큰     |
+| `refreshToken` | `string`    | 리프레시 토큰 |
+
+```JSON
+{
+  "accessToken": "ACCESS TOKEN STRING HERE",
+  "refreshToken": "REFRESH TOKEN STRING HERE"
 }
 ```
 
