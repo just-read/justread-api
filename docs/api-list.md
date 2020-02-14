@@ -47,7 +47,7 @@
 #### 요청
 
 ```
-POST {{API_URL}}/v1/user/signup
+POST {{API_URL}}/v1/users/signup
 ```
 
 | 파라미터   | 파라미터 유형 | 데이터 타입 | 필수 여부 | 설명     |
@@ -73,7 +73,7 @@ POST {{API_URL}}/v1/user/signup
 #### 요청
 
 ```
-POST {{API_URL}}/v1/user/login
+POST {{API_URL}}/v1/users/login
 ```
 
 | 파라미터   | 파라미터 유형 | 데이터 타입 | 필수 여부 | 설명     |

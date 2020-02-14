@@ -3,6 +3,6 @@ import getBookList from '../../controllers/book/getBookList';
 
 const bookRouter = Router();
 
-bookRouter.get('/books', getBookList);
+bookRouter.get('', getBookList);
 
 export default bookRouter;
