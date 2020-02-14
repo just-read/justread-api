@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import User from '../../entities/user';
-import { createToken } from '../../utils/auth';
+import { generateToken } from '../../utils/auth';
 import { AlreadyExistsError } from '../../utils/customErrors';
 
 interface SignUpRequest extends Request {
@@ -20,12 +20,13 @@ const signUp = async (req: SignUpRequest, res: Response): Promise<Response> => {
     throw new AlreadyExistsError('이미 존재하는 이메일입니다.');
   }
   const newUser = await User.create({ email, password, nickName }).save();
-  const token = createToken(newUser);
+  const { accessToken, refreshToken } = await newUser.generateUserTokens();
   return res.status(201).json({
     success: true,
     message: null,
     result: {
-      token
+      accessToken,
+      refreshToken
     }
   });
 };

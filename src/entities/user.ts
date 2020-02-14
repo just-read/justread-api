@@ -9,8 +9,14 @@ import {
 } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { IsEmail } from 'class-validator';
+import { generateToken } from '../utils/auth';
 
 const BCRYPT_ROUNDS = 10;
+
+interface GenerateTokensResult {
+  accessToken: string;
+  refreshToken: string;
+}
 
 @Entity()
 class User extends BaseEntity {
@@ -51,6 +57,34 @@ class User extends BaseEntity {
       const hashedPassword = await this.hashPassword(this.password);
       this.password = hashedPassword;
     }
+  }
+
+  async generateUserTokens(): Promise<GenerateTokensResult> {
+    const accessToken = await generateToken(this, { subject: 'accessToken', expiresIn: '1h' });
+    const refreshToken = await generateToken(this, { subject: 'refreshToken', expiresIn: '30d' });
+    return { accessToken, refreshToken };
+  }
+
+  async refreshUserTokens(
+    originalRefreshToken: string,
+    refreshTokenExp: number
+  ): Promise<GenerateTokensResult> {
+    const now = new Date().getTime();
+    const diff = refreshTokenExp * 1000 - now;
+    let refreshToken = originalRefreshToken;
+
+    if (diff < 1000 * 60 * 60 * 24 * 3) {
+      refreshToken = await generateToken(this, {
+        subject: 'refresh_token',
+        expiresIn: '30d'
+      });
+    }
+    const accessToken = await generateToken(this, {
+      subject: 'access_token',
+      expiresIn: '1h'
+    });
+
+    return { refreshToken, accessToken };
   }
 }
 
