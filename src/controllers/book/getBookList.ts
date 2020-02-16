@@ -2,20 +2,22 @@ import { Request, Response } from 'express';
 import Book from '../../entities/book';
 import { InvalidParamError } from '../../utils/customErrors';
 
-export enum GetType {
-  RECENT = 'recent',
-  POPULAR = 'popular'
+export enum BookListType {
+  RECENT,
+  POPULAR
 }
+
+type BookListStrings = keyof typeof BookListType;
 
 interface GetBookListRequest extends Request {
   params: {
-    type: GetType.RECENT | GetType.POPULAR;
+    type: BookListStrings;
   };
 }
 
 const getBookList = async (req: GetBookListRequest, res: Response): Promise<Response> => {
   const {
-    params: { type = GetType.RECENT }
+    params: { type = BookListType[BookListType.RECENT] }
   } = req;
 
   const getRecentBookList = async (): Promise<[Book[], number]> =>
@@ -26,7 +28,7 @@ const getBookList = async (req: GetBookListRequest, res: Response): Promise<Resp
       }
     });
 
-  if (Object.values(GetType).includes(type)) {
+  if (Object.keys(BookListType).includes(type)) {
     throw new InvalidParamError('type이 올바르지 않습니다.');
   }
 
