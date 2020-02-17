@@ -5,7 +5,8 @@ import {
   Column,
   CreateDateColumn,
   BeforeInsert,
-  BeforeUpdate
+  BeforeUpdate,
+  UpdateDateColumn
 } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { IsEmail } from 'class-validator';
@@ -41,6 +42,9 @@ class User extends BaseEntity {
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;
+
+  @UpdateDateColumn({ type: 'timestamptz' })
+  updatedAt!: Date;
 
   hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, BCRYPT_ROUNDS);

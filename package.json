@@ -26,6 +26,7 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
+    "@types/shortid": "^0.0.29",
     "bcrypt": "^3.0.8",
     "body-parser": "^1.19.0",
     "class-validator": "^0.11.0",
@@ -35,6 +36,7 @@
     "morgan": "^1.9.1",
     "pg": "^7.18.1",
     "serverless-http": "^2.3.1",
+    "shortid": "^2.2.15",
     "typeorm": "^0.2.22"
   },
   "scripts": {
