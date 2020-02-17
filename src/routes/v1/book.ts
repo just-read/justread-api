@@ -5,6 +5,6 @@ import getBookDetails from '../../controllers/book/getBookDetails';
 const bookRouter = Router();
 
 bookRouter.get('', getBookList);
-bookRouter.get('/:bookId', getBookDetails);
+bookRouter.get('/:bookUniqueId', getBookDetails);
 
 export default bookRouter;
