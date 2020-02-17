@@ -21,6 +21,10 @@ const getBookList = async (req: GetBookListRequest, res: Response): Promise<Resp
     query: { type = EnumBookListType.RECENT }
   } = req;
 
+  if (!(type in EnumBookListType)) {
+    throw new InvalidParamError('type이 올바르지 않습니다.');
+  }
+
   const getRecentBookList = async (): Promise<[Book[], number]> =>
     Book.findAndCount({
       take: 10,
@@ -28,10 +32,6 @@ const getBookList = async (req: GetBookListRequest, res: Response): Promise<Resp
         id: 'DESC'
       }
     });
-
-  if (!(type in EnumBookListType)) {
-    throw new InvalidParamError('type이 올바르지 않습니다.');
-  }
 
   const bookItems = await getRecentBookList();
 
