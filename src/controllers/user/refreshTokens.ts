@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import { decodeToken } from '../../utils/auth';
+import { decodeToken, RefreshTokenData } from '../../utils/auth';
 import { UnauthorizedError } from '../../utils/customErrors';
 import User from '../../entities/user';
 
@@ -9,16 +9,6 @@ interface RefreshTokensRequest extends Request {
     refreshToken: string;
   };
 }
-
-type TokenData = {
-  exp: number;
-  iss: string;
-};
-
-type RefreshTokenData = {
-  id: string;
-  email: string;
-} & TokenData;
 
 const refreshTokens = async (req: RefreshTokensRequest, res: Response) => {
   const {
