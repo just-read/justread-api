@@ -24,6 +24,7 @@ const getBookDetails = async (req: GetBookDetailsRequest, res: Response): Promis
 
   return res.status(200).json({
     success: true,
+    message: null,
     result: {
       bookDetails: bookInfo
     }

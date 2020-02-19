@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import User from '../../entities/user';
-import { generateToken } from '../../utils/auth';
 import { AlreadyExistsError } from '../../utils/customErrors';
 
 interface SignUpRequest extends Request {
