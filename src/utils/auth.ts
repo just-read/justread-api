@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt, { SignOptions, decode } from 'jsonwebtoken';
 import User from '../entities/user';
+import { UnauthorizedError } from './customErrors';
 
 export type TokenData = {
   exp: number;
@@ -60,4 +61,12 @@ const consumeAuthToken = async (req: Request, res: Response, next: NextFunction)
   return next();
 };
 
-export { generateToken, decodeToken, consumeAuthToken };
+const privateRoute = (req: Request, res: Response, next: NextFunction): void => {
+  const { user } = req;
+  if (!user) {
+    throw new UnauthorizedError('인증 정보가 존재하지 않습니다.');
+  }
+  return next();
+};
+
+export { generateToken, decodeToken, consumeAuthToken, privateRoute };
