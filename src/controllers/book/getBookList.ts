@@ -13,21 +13,25 @@ type BookListStrings = keyof typeof EnumBookListType;
 interface GetBookListRequest extends Request {
   query: {
     type: BookListStrings;
+    page: number;
+    limit: number;
   };
 }
 
 const getBookList = async (req: GetBookListRequest, res: Response): Promise<Response> => {
   const {
-    query: { type = EnumBookListType.RECENT }
+    query: { type = EnumBookListType.RECENT, page = 1, limit = 10 }
   } = req;
 
   if (!(type in EnumBookListType)) {
     throw new InvalidParamError('type이 올바르지 않습니다.');
   }
 
+  const offset = page * limit;
   const getRecentBookList = async (): Promise<[Book[], number]> =>
     Book.findAndCount({
-      take: 10,
+      take: limit,
+      skip: offset,
       order: {
         id: 'DESC'
       }
