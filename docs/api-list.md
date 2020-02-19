@@ -93,8 +93,8 @@ POST {{API_URL}}/v1/users/login
 
 ```json
 {
-  "accessToken": "ACCESS TOKEN STRING HERE",
-  "refreshToken": "REFRESH TOKEN STRING HERE"
+  "accessToken": "ACCESS TOKEN HERE",
+  "refreshToken": "REFRESH TOKEN HERE"
 }
 ```
 
@@ -119,8 +119,8 @@ POST {{API_URL}}/v1/users/tokens
 
 ```JSON
 {
-  "accessToken": "ACCESS TOKEN STRING HERE",
-  "refreshToken": "REFRESH TOKEN STRING HERE"
+  "accessToken": "ACCESS TOKEN HERE",
+  "refreshToken": "REFRESH TOKEN HERE"
 }
 ```
 
@@ -128,7 +128,56 @@ POST {{API_URL}}/v1/users/tokens
 
 ## 책
 
+#### 책 오브젝트 기본 타입
+
+```typescript
+interface Book {
+  uniqueId: string;
+  title: string;
+  description: string;
+  year: number;
+}
+```
+
 ### 책 목록
+
+#### 요청
+
+```
+GET {{API_URL}}/v1/books?type={{TYPE}}
+```
+
+| 파라미터 | 파라미터 유형 | 데이터 타입 | 필수 여부 | 설명                    |
+| -------- | ------------- | ----------- | --------- | ----------------------- |
+| `type`   | `query`       | `string`    |           | 가져올 책 목록의 타입   |
+| `page`   | `query`       | `string`    |           | 가져올 페이지 번호      |
+| `limit`  | `query`       | `string`    |           | 페이지에 표시될 책 갯수 |
+
+#### 응답
+
+| 키          | 데이터 타입 | 설명    |
+| ----------- | ----------- | ------- |
+| `bookItems` | `Book[]`    | 책 목록 |
+
+```JSON
+{
+  "bookItems": [
+    {
+      "uniqueId": "UNIQUE ID",
+      "title": "TITLE",
+      "description": "DESCRIPTION",
+      "year": 2020
+    },
+    {
+      "uniqueId": "UNIQUE ID",
+      "title": "TITLE",
+      "description": "DESCRIPTION",
+      "year": 2020
+    },
+    // more books...
+  ]
+}
+```
 
 ### 책 검색
 
