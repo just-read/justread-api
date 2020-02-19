@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import User from '../../entities/user';
-import { generateToken } from '../../utils/auth';
-import { NotFoundError, IncorrectLoginRequestError } from '../../utils/customErrors';
+import {
+  NotFoundError,
+  IncorrectLoginRequestError,
+  InvalidParamError
+} from '../../utils/customErrors';
 
 interface LogInRequest extends Request {
   body: {
@@ -14,6 +17,9 @@ const logIn = async (req: LogInRequest, res: Response): Promise<Response> => {
   const {
     body: { email, password }
   } = req;
+  if (!email || !password) {
+    throw new InvalidParamError('이메일과 비밀번호를 입력해주세요.');
+  }
   const user = await User.findOne({ email });
   if (!user) {
     throw new NotFoundError('존재하지 않는 이메일입니다.');

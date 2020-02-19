@@ -4,9 +4,9 @@ import { InvalidParamError } from '../../utils/customErrors';
 
 interface AddNewBookRequest extends Request {
   body: {
-    title: string | undefined;
-    description: string | undefined;
-    year: number | undefined;
+    title: string;
+    description: string;
+    year: number;
   };
 }
 
