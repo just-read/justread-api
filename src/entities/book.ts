@@ -12,7 +12,7 @@ import shortid from 'shortid';
 
 @Entity()
 class Book extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: number;
 
   @Index('idx_unique_key', { unique: true })

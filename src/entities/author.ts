@@ -7,7 +7,7 @@ export enum AuthorType {
 
 @Entity()
 class Author extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: number;
 
   @Column({ type: 'enum', enum: AuthorType, default: AuthorType.WRITER })

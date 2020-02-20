@@ -9,13 +9,13 @@ import {
 
 @Entity()
 class Rating extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: number;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'bigint', unsigned: true })
   userId!: number;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'bigint', unsigned: true })
   bookId!: number;
 
   @Column({ type: 'smallint' })

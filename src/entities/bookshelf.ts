@@ -9,10 +9,10 @@ import {
 
 @Entity()
 class Bookshelf extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: number;
 
-  @Column({ type: 'int', unsigned: true })
+  @Column({ type: 'bigint', unsigned: true })
   userId!: number;
 
   @Column({ type: 'varchar', length: 50, nullable: false })
