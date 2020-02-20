@@ -6,11 +6,15 @@ import {
   CreateDateColumn,
   BeforeInsert,
   BeforeUpdate,
-  UpdateDateColumn
+  UpdateDateColumn,
+  OneToMany
 } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { IsEmail } from 'class-validator';
 import { generateToken } from '../utils/auth';
+import Rating from './rating';
+import Review from './review';
+import Bookshelf from './bookshelf';
 
 const BCRYPT_ROUNDS = 10;
 
@@ -45,6 +49,24 @@ class User extends BaseEntity {
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
+
+  @OneToMany(
+    type => Rating,
+    rating => rating.user
+  )
+  ratings!: Rating[];
+
+  @OneToMany(
+    type => Review,
+    review => review.user
+  )
+  reviews!: Review[];
+
+  @OneToMany(
+    type => Bookshelf,
+    bookshelf => bookshelf.user
+  )
+  bookshelves!: Bookshelf[];
 
   hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, BCRYPT_ROUNDS);

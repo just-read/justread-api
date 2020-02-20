@@ -4,8 +4,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  ManyToOne
 } from 'typeorm';
+import User from './user';
 
 @Entity()
 class Bookshelf extends BaseEntity {
@@ -23,6 +25,12 @@ class Bookshelf extends BaseEntity {
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
+
+  @ManyToOne(
+    type => User,
+    user => user.ratings
+  )
+  user!: User;
 }
 
 export default Bookshelf;

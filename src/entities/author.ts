@@ -1,4 +1,5 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import Book from './book';
 
 export enum AuthorType {
   WRITER = 'writer',
@@ -15,6 +16,12 @@ class Author extends BaseEntity {
 
   @Column({ type: 'varchar', length: 30 })
   name!: string;
+
+  @ManyToMany(
+    type => Book,
+    book => book.authors
+  )
+  books!: Book[];
 }
 
 export default Author;

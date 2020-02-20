@@ -4,8 +4,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  ManyToOne
 } from 'typeorm';
+import User from './user';
+import Book from './book';
 
 @Entity()
 class Review extends BaseEntity {
@@ -26,6 +29,18 @@ class Review extends BaseEntity {
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
+
+  @ManyToOne(
+    type => User,
+    user => user.ratings
+  )
+  user!: User;
+
+  @ManyToOne(
+    type => Book,
+    book => book.ratings
+  )
+  book!: Book;
 }
 
 export default Review;

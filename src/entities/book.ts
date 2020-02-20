@@ -6,9 +6,14 @@ import {
   Index,
   BeforeInsert,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  OneToMany,
+  ManyToMany
 } from 'typeorm';
 import shortid from 'shortid';
+import Rating from './rating';
+import Review from './review';
+import Author from './author';
 
 @Entity()
 class Book extends BaseEntity {
@@ -33,6 +38,24 @@ class Book extends BaseEntity {
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
+
+  @ManyToMany(
+    type => Author,
+    author => author.books
+  )
+  authors!: Author[];
+
+  @OneToMany(
+    type => Rating,
+    rating => rating.book
+  )
+  ratings!: Rating[];
+
+  @OneToMany(
+    type => Review,
+    review => review.book
+  )
+  reviews!: Review[];
 
   @BeforeInsert()
   async generateUniqueId(): Promise<void> {
