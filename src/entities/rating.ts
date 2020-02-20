@@ -11,7 +11,7 @@ class Rating extends BaseEntity {
   @Column({ type: 'int' })
   bookId!: number;
 
-  @Column({ type: 'int', length: 1 })
+  @Column({ type: 'smallint' })
   rating!: number;
 }
 

@@ -25,7 +25,7 @@ class Book extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   description?: string;
 
-  @Column({ type: 'int', length: 4, nullable: true })
+  @Column({ type: 'smallint', unsigned: true, nullable: true })
   year?: number;
 
   @CreateDateColumn({ type: 'timestamptz' })

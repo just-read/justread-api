@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from 'express';
-import jwt, { SignOptions, decode } from 'jsonwebtoken';
+import { NextFunction, Response, Request } from 'express';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import User from '../entities/user';
 import { UnauthorizedError } from './customErrors';
 
@@ -17,6 +17,10 @@ export type RefreshTokenData = {
   id: number;
   email: string;
 } & TokenData;
+
+interface CustomRequest extends Request {
+  user?: User;
+}
 
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY || 'DEFAULT_JSON_SECRET_KEY';
 
@@ -48,7 +52,11 @@ const decodeToken = async <T = any>(token: string): Promise<T> =>
     });
   });
 
-const consumeAuthToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const consumeAuthToken = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   const {
     headers: { authorization: authToken }
   } = req;
@@ -61,7 +69,7 @@ const consumeAuthToken = async (req: Request, res: Response, next: NextFunction)
   return next();
 };
 
-const privateRoute = (req: Request, res: Response, next: NextFunction): void => {
+const privateRoute = (req: CustomRequest, res: Response, next: NextFunction): void => {
   const { user } = req;
   if (!user) {
     throw new UnauthorizedError('인증 정보가 존재하지 않습니다.');
