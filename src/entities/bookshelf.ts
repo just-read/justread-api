@@ -6,10 +6,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany
+  ManyToMany,
+  JoinTable
 } from 'typeorm';
 import User from './user';
-import BookLink from './bookLink';
+import Book from './book';
 
 @Entity()
 class Bookshelf extends BaseEntity {
@@ -34,11 +35,9 @@ class Bookshelf extends BaseEntity {
   )
   user!: User;
 
-  @OneToMany(
-    type => BookLink,
-    bookLink => bookLink.bookshelf
-  )
-  bookLinks!: BookLink[];
+  @ManyToMany(type => Book)
+  @JoinTable()
+  books!: Book[];
 }
 
 export default Bookshelf;
