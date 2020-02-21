@@ -18,7 +18,7 @@ export type RefreshTokenData = {
   email: string;
 } & TokenData;
 
-interface CustomRequest extends Request {
+export interface CustomRequest extends Request {
   user?: User;
 }
 
