@@ -8,14 +8,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  ManyToMany,
-  OneToOne
+  ManyToMany
 } from 'typeorm';
 import shortid from 'shortid';
 import Rating from './rating';
 import Review from './review';
 import Author from './author';
-import BookLink from './bookLink';
 
 @Entity()
 class Book extends BaseEntity {
