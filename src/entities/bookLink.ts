@@ -6,21 +6,21 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  OneToMany
+  OneToOne
 } from 'typeorm';
-import User from './user';
-import BookLink from './bookLink';
+import Book from './book';
+import Bookshelf from './bookshelf';
 
 @Entity()
-class Bookshelf extends BaseEntity {
+class BookshelfList extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: number;
 
   @Column({ type: 'bigint', unsigned: true })
-  userId!: number;
+  bookshelfId!: number;
 
-  @Column({ type: 'varchar', length: 50, nullable: false })
-  name!: string;
+  @Column({ type: 'bigint', unsigned: true })
+  bookId!: number;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;
@@ -28,17 +28,11 @@ class Bookshelf extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
 
-  @ManyToOne(
-    type => User,
-    user => user.ratings
-  )
-  user!: User;
+  @ManyToOne(type => Bookshelf)
+  bookshelf!: Bookshelf;
 
-  @OneToMany(
-    type => BookLink,
-    bookLink => bookLink.bookshelf
-  )
-  bookLinks!: BookLink[];
+  @OneToOne(type => Book)
+  book!: Book;
 }
 
-export default Bookshelf;
+export default BookshelfList;

@@ -1,4 +1,12 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import {
+  Entity,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  CreateDateColumn,
+  UpdateDateColumn
+} from 'typeorm';
 import Book from './book';
 
 export enum AuthorType {
@@ -16,6 +24,12 @@ class Author extends BaseEntity {
 
   @Column({ type: 'varchar', length: 30 })
   name!: string;
+
+  @CreateDateColumn({ type: 'timestamptz' })
+  createdAt!: Date;
+
+  @UpdateDateColumn({ type: 'timestamptz' })
+  updatedAt!: Date;
 
   @ManyToMany(
     type => Book,
