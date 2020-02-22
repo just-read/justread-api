@@ -1,5 +1,5 @@
-import { CustomRequest } from '../../utils/auth';
 import { Response, NextFunction } from 'express';
+import { CustomRequest } from '../../utils/auth';
 import { UnauthorizedError, InvalidParamError } from '../../utils/customErrors';
 import Bookshelf from '../../entities/bookshelf';
 
