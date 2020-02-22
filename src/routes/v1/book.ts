@@ -1,8 +1,6 @@
 import { Router } from 'express';
 import { privateRoute } from '../../utils/auth';
-import getBookList from '../../controllers/book/getBookList';
-import getBookDetails from '../../controllers/book/getBookDetails';
-import addNewBook from '../../controllers/book/addNewBook';
+import { getBookList, getBookDetails, addNewBook } from '../../controllers/bookControllers';
 
 const bookRouter = Router();
 
