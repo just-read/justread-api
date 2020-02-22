@@ -7,25 +7,27 @@ import {
   BeforeInsert,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
-  ManyToMany
+  OneToMany
 } from 'typeorm';
 import shortid from 'shortid';
 import Rating from './rating';
 import Review from './review';
-import Author from './author';
 
 @Entity()
 class Book extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: number;
 
-  @Index('idx_unique_key', { unique: true })
-  @Column({ type: 'varchar', length: 32 })
+  @Index('idx_unique_id', { unique: true })
+  @Column({ type: 'varchar', length: 20 })
   uniqueId!: string;
 
   @Column({ type: 'varchar', length: 200 })
   title!: string;
+
+  @Index('idx_isbn', { unique: true })
+  @Column({ type: 'varchar', length: 50 })
+  isbn!: string;
 
   @Column({ type: 'text', nullable: true })
   description?: string;
@@ -33,17 +35,14 @@ class Book extends BaseEntity {
   @Column({ type: 'smallint', unsigned: true, nullable: true })
   year?: number;
 
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  authors!: string;
+
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
-
-  @ManyToMany(
-    type => Author,
-    author => author.books
-  )
-  authors!: Author[];
 
   @OneToMany(
     type => Rating,
