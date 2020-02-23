@@ -8,11 +8,9 @@ export enum EnumBookListType {
   RECOMMEND = 'recomend'
 }
 
-type BookListStrings = keyof typeof EnumBookListType;
-
 interface GetBookListRequest extends Request {
   query: {
-    type: BookListStrings;
+    type: string;
     page: number;
     limit: number;
   };
