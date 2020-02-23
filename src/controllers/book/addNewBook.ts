@@ -1,8 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import Book from '../../entities/book';
-import { InvalidParamError } from '../../utils/customErrors';
+import { InvalidParamError, UnauthorizedError } from '../../utils/customErrors';
+import { CustomRequest } from '../../utils/auth';
 
-interface AddNewBookRequest extends Request {
+interface AddNewBookRequest extends CustomRequest {
   body: {
     title: string;
     isbn: string;
@@ -18,6 +19,10 @@ const addNewBook = async (
   next: NextFunction
 ): Promise<void> => {
   try {
+    if (!req.user) {
+      throw new UnauthorizedError('인증 정보가 존재하지 않습니다.');
+    }
+
     const {
       body: { title, isbn, description, year, authors }
     } = req;
@@ -31,7 +36,7 @@ const addNewBook = async (
       success: true,
       message: null,
       result: {
-        bookInfo: newBook
+        newBook
       }
     });
   } catch (error) {
