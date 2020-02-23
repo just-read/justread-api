@@ -26,6 +26,10 @@ const searchBooks = async (
         return false;
       };
 
+      /**
+       * 책 숫자가 많아지면 성능 저하가 있을 것으로 예상됨
+       * 일단 구현이 목표니 이대로 하고 나중에 개선하는 걸로
+       */
       let books: [Book[], number] = [[], 0];
       if (isISBN(searchTerm)) {
         books = await getRepository(Book).findAndCount({
