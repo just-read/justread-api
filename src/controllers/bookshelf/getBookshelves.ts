@@ -3,7 +3,7 @@ import { CustomRequest } from '../../utils/auth';
 import { UnauthorizedError } from '../../utils/customErrors';
 import Bookshelf from '../../entities/bookshelf';
 
-const getBookshelfList = async (
+const getBookshelves = async (
   req: CustomRequest,
   res: Response,
   next: NextFunction
@@ -35,4 +35,4 @@ const getBookshelfList = async (
   }
 };
 
-export default getBookshelfList;
+export default getBookshelves;

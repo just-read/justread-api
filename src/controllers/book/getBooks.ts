@@ -16,7 +16,7 @@ interface GetBookListRequest extends Request {
   };
 }
 
-const getBookList = async (
+const getBooks = async (
   req: GetBookListRequest,
   res: Response,
   next: NextFunction
@@ -54,4 +54,4 @@ const getBookList = async (
   }
 };
 
-export default getBookList;
+export default getBooks;

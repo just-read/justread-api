@@ -1,2 +1,2 @@
 export { default as createNewBookshelf } from './bookshelf/createNewBookshelf';
-export { default as getBookshelfList } from './bookshelf/getBookshelfList';
+export { default as getBookshelves } from './bookshelf/getBookshelves';
