@@ -36,8 +36,8 @@ const searchBooks = async (
       } else {
         books = await getRepository(Book)
           .createQueryBuilder('book')
-          .where(`book.title LIKE '%${searchTerm}%'`)
-          .orWhere(`book.author LIKE '%${searchTerm}%`)
+          .where('book.title LIKE :searchTerm', { searchTerm })
+          .orWhere('book.author LIKE :searchTerm', { searchTerm })
           .getManyAndCount();
       }
 
