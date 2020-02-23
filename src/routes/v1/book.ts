@@ -13,6 +13,6 @@ const bookRouter = Router();
 bookRouter.get('', searchBooks, getBooks);
 bookRouter.get('/:bookUniqueId', getBookDetails);
 bookRouter.post('', privateRoute, addNewBook);
-bookRouter.put('/:bookUniqueId', modifyBook);
+bookRouter.put('/:bookUniqueId', privateRoute, modifyBook);
 
 export default bookRouter;
