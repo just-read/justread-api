@@ -1,17 +1,17 @@
 import { Response, NextFunction } from 'express';
+import { getRepository } from 'typeorm';
+import Bookshelf from '../../entities/bookshelf';
 import { CustomRequest } from '../../utils/auth';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
-import Bookshelf from '../../entities/bookshelf';
-import { getRepository } from 'typeorm';
 
-interface GetBookshelfDetailsRequest extends CustomRequest {
+interface RemoveBookshelfRequest extends CustomRequest {
   params: {
     bookshelfId: string;
   };
 }
 
-const getBookshelfDetails = async (
-  req: GetBookshelfDetailsRequest,
+const removeBookshelf = async (
+  req: RemoveBookshelfRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
@@ -31,20 +31,22 @@ const getBookshelfDetails = async (
 
     const parsedBookshelfId = parseInt(bookshelfId, 10);
 
-    const bookshelfDetails = await getRepository(Bookshelf).findOne({
+    const bookshelf = await getRepository(Bookshelf).findOne({
       id: parsedBookshelfId,
       userId
     });
 
-    if (!bookshelfDetails) {
+    if (!bookshelf) {
       throw new NotFoundError('일치하는 정보를 찾을 수 없습니다.');
     }
+
+    await getRepository(Bookshelf).delete({ id: bookshelf.id });
 
     res.status(200).json({
       success: true,
       message: null,
       result: {
-        bookshelfDetails
+        removedBookshelf: bookshelf
       }
     });
   } catch (error) {
@@ -52,4 +54,4 @@ const getBookshelfDetails = async (
   }
 };
 
-export default getBookshelfDetails;
+export default removeBookshelf;
