@@ -183,9 +183,21 @@ GET {{API_URL}}/v1/books?type={{TYPE}}
 
 ### ✅ 책 상세
 
+```
+GET {{API_URL}}/v1/books/{uniqueBookId}
+```
+
 ### ✅ 새 책 추가
 
+```
+POST {{API_URL}}/v1/books
+```
+
 ### ✅ 책 수정
+
+```
+PUT {{API_URL}}/v1/books/{uniqueBookId}
+```
 
 ## 리뷰
 
@@ -193,7 +205,7 @@ GET {{API_URL}}/v1/books?type={{TYPE}}
 
 ### 책 별점 평가 삭제
 
-### ✅ 새 책 리뷰 생성
+### 새 책 리뷰 생성
 
 ### 책 리뷰 목록
 
@@ -205,9 +217,21 @@ GET {{API_URL}}/v1/books?type={{TYPE}}
 
 ### ✅ 새 책 목록 생성
 
+```
+POST {{API_URL}}/v1/bookshelves
+```
+
 ### ✅ 책 목록 리스트
 
+```
+GET {{API_URL}}/v1/bookshelves
+```
+
 ### ✅ 책 목록 상세
+
+```
+GET {{API_URL}}/v1/bookshelves/{bookshelfId}
+```
 
 ### 책 목록 이름 수정
 
