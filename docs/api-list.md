@@ -6,7 +6,7 @@
   - [✅ 토큰 갱신](#토큰-갱신)
 - [책](#책)
   - [✅ 책 목록](#책-목록)
-  - [책 검색](#책-검색)
+  - [✅ 책 검색](#책-검색)
   - [✅ 책 상세](#책-상세)
   - [✅ 새 책 추가](#새-책-추가)
   - [✅ 책 수정](#책-수정)
@@ -164,7 +164,7 @@ interface Book {
 #### 요청
 
 ```
-GET {{API_URL}}/v1/books?type={{TYPE}}
+GET {{API_URL}}/v1/books?type={type}
 ```
 
 | 파라미터 | 파라미터 유형 | 데이터 타입 | 필수 여부          | 설명                    |
@@ -200,6 +200,44 @@ GET {{API_URL}}/v1/books?type={{TYPE}}
 ```
 
 ### 책 검색
+
+#### 요청
+
+```
+GET {{API_URL}}/v1/books?p={search_term}
+```
+
+| 파라미터 | 파라미터 유형 | 데이터 타입 | 필수 여부      | 설명                        |
+| -------- | ------------- | ----------- | -------------- | --------------------------- |
+| `q`      | `query`       | `string`    | ✅             | 검색어(ISBN, 제목, 저자 등) |
+| `page`   | `query`       | `string`    | `(default) 1`  | 가져올 페이지 번호          |
+| `limit`  | `query`       | `string`    | `(default) 10` | 페이지에 표시될 책 갯수     |
+
+#### 응답
+
+| 키          | 데이터 타입 | 설명    |
+| ----------- | ----------- | ------- |
+| `bookItems` | `Book[]`    | 책 목록 |
+
+```JSON
+{
+  "bookItems": [
+    {
+      "uniqueId": "UNIQUE ID",
+      "title": "TITLE",
+      "description": "DESCRIPTION",
+      "year": 2020
+    },
+    {
+      "uniqueId": "UNIQUE ID",
+      "title": "TITLE",
+      "description": "DESCRIPTION",
+      "year": 2020
+    },
+    // more books...
+  ]
+}
+```
 
 ### 책 상세
 
