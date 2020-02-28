@@ -5,7 +5,8 @@ import {
   getBookshelves,
   getBookshelfDetails,
   modifyBookshelf,
-  removeBookshelf
+  removeBookshelf,
+  addBook
 } from '../../controllers/bookshelfControllers';
 
 const bookshelfRouter = Router();
@@ -13,6 +14,7 @@ const bookshelfRouter = Router();
 bookshelfRouter.get('', privateRoute, getBookshelves);
 bookshelfRouter.get('/:bookshelfId', privateRoute, getBookshelfDetails);
 bookshelfRouter.post('', privateRoute, createNewBookshelf);
+bookshelfRouter.post('/:bookshelfId', privateRoute, addBook);
 bookshelfRouter.put('/:bookshelfId', privateRoute, modifyBookshelf);
 bookshelfRouter.delete('/:bookshelfId', privateRoute, removeBookshelf);
 
