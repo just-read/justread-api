@@ -15,8 +15,7 @@ interface GetBookListRequest extends Request {
     limit: number;
   };
 }
-
-interface InterfaceBookList {
+interface IBookList {
   bookItems: Book[];
   total: number;
   count: number;
@@ -37,7 +36,7 @@ const getBooks = async (
 
     const offset = page * limit;
 
-    const getRecentBookListInfo = async (): Promise<InterfaceBookList> => {
+    const getRecentBookListInfo = async (): Promise<IBookList> => {
       const recentTotal = await Book.count();
       const recentInfo = await Book.findAndCount({
         take: limit,
@@ -53,7 +52,7 @@ const getBooks = async (
       };
     };
 
-    let initialBookItemsInfo: InterfaceBookList = {
+    let initialBookItemsInfo: IBookList = {
       bookItems: [],
       total: 0,
       count: 0
