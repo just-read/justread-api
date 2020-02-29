@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import Book from '../../entities/book';
 import { InvalidParamError } from '../../utils/customErrors';
 import { getRepository } from 'typeorm';
+import { IBookList } from './types';
 
 export enum EnumBookListType {
   recent = 'recent',
@@ -15,11 +16,6 @@ interface GetBookListRequest extends Request {
     page: number;
     limit: number;
   };
-}
-interface IBookList {
-  bookItems: Book[];
-  total: number;
-  count: number;
 }
 
 const getBooks = async (
@@ -38,24 +34,24 @@ const getBooks = async (
     const offset = page * limit;
 
     const getRecentBookListInfo = async (): Promise<IBookList> => {
-      const recentTotal = await getRepository(Book)
+      const total = await getRepository(Book)
         .createQueryBuilder('book')
         .getCount();
-      const recentInfo = await getRepository(Book)
+      const [books, count] = await getRepository(Book)
         .createQueryBuilder('book')
         .limit(limit)
         .offset(offset)
         .orderBy('book.id', 'DESC')
         .getManyAndCount();
       return {
-        bookItems: recentInfo[0],
-        count: recentInfo[1],
-        total: recentTotal
+        books,
+        count,
+        total
       };
     };
 
     let initialBookItemsInfo: IBookList = {
-      bookItems: [],
+      books: [],
       total: 0,
       count: 0
     };
@@ -73,7 +69,7 @@ const getBooks = async (
       success: true,
       message: null,
       result: {
-        bookItems: initialBookItemsInfo.bookItems,
+        books: initialBookItemsInfo.books,
         pageInfo: {
           total: initialBookItemsInfo.total,
           current: page,
