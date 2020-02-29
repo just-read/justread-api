@@ -159,6 +159,17 @@ interface Book {
 }
 ```
 
+#### 페이지 정보 오브젝트 기본 타입
+
+```typescript
+interface PageInfo {
+  total: number;
+  current: number;
+  limit: number;
+  count: number;
+}
+```
+
 ### 책 목록
 
 #### 요청
@@ -195,7 +206,13 @@ GET {{API_URL}}/v1/books?type={type}
       "year": 2020
     },
     // more books...
-  ]
+  ],
+  "pageInfo": {
+    "total": 2,
+    "current": 1,
+    "limit": 10,
+    "count": 2
+  }
 }
 ```
 
