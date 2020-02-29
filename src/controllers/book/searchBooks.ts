@@ -38,22 +38,19 @@ const searchBooks = async (
       let books: [Book[], number] = [[], 0];
       if (isISBN(searchTerm)) {
         total = await getRepository(Book)
-          .createQueryBuilder()
-          .where('isbn = :isbn', { isbn: searchTerm })
+          .createQueryBuilder('book')
+          .where('book.isbn = :searchTerm', { searchTerm })
           .getCount();
-        books = await getRepository(Book).findAndCount({
-          where: {
-            isbn: searchTerm
-          },
-          take: limit,
-          skip: offset,
-          order: {
-            id: 'DESC'
-          }
-        });
+        books = await getRepository(Book)
+          .createQueryBuilder('book')
+          .where('book.isbn = :searchTerm', { searchTerm })
+          .limit(limit)
+          .offset(offset)
+          .orderBy('book.id', 'DESC')
+          .getManyAndCount();
       } else {
         total = await getRepository(Book)
-          .createQueryBuilder()
+          .createQueryBuilder('book')
           .where('book.title LIKE :searchTerm', { searchTerm })
           .orWhere('book.author LIKE :searchTerm', { searchTerm })
           .getCount();
@@ -66,7 +63,6 @@ const searchBooks = async (
           .orderBy('id', 'DESC')
           .getManyAndCount();
       }
-      // 아무래도 ORM 쿼리빌더 사용 통일화가 필요할 것 같다
 
       res.status(200).json({
         success: true,
