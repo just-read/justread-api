@@ -186,9 +186,10 @@ GET {{API_URL}}/v1/books?type={type}
 
 #### 응답
 
-| 키          | 데이터 타입 | 설명    |
-| ----------- | ----------- | ------- |
-| `bookItems` | `Book[]`    | 책 목록 |
+| 키          | 데이터 타입 | 설명        |
+| ----------- | ----------- | ----------- |
+| `bookItems` | `Book[]`    | 책 목록     |
+| `pageInfo`  | `PageInfo`  | 페이지 정보 |
 
 ```JSON
 {
@@ -232,9 +233,10 @@ GET {{API_URL}}/v1/books?p={search_term}
 
 #### 응답
 
-| 키          | 데이터 타입 | 설명    |
-| ----------- | ----------- | ------- |
-| `bookItems` | `Book[]`    | 책 목록 |
+| 키          | 데이터 타입 | 설명        |
+| ----------- | ----------- | ----------- |
+| `bookItems` | `Book[]`    | 책 목록     |
+| `pageInfo`  | `PageInfo`  | 페이지 정보 |
 
 ```JSON
 {
@@ -252,7 +254,13 @@ GET {{API_URL}}/v1/books?p={search_term}
       "year": 2020
     },
     // more books...
-  ]
+  ],
+  "pageInfo": {
+    "total": 2,
+    "current": 1,
+    "limit": 10,
+    "count": 2
+  }
 }
 ```
 
