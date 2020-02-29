@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Book from '../../entities/book';
 import { InvalidParamError } from '../../utils/customErrors';
+import { getRepository } from 'typeorm';
 
 export enum EnumBookListType {
   recent = 'recent',
@@ -37,14 +38,15 @@ const getBooks = async (
     const offset = page * limit;
 
     const getRecentBookListInfo = async (): Promise<IBookList> => {
-      const recentTotal = await Book.count();
-      const recentInfo = await Book.findAndCount({
-        take: limit,
-        skip: offset,
-        order: {
-          id: 'DESC'
-        }
-      });
+      const recentTotal = await getRepository(Book)
+        .createQueryBuilder('book')
+        .getCount();
+      const recentInfo = await getRepository(Book)
+        .createQueryBuilder('book')
+        .limit(limit)
+        .offset(offset)
+        .orderBy('book.id', 'DESC')
+        .getManyAndCount();
       return {
         bookItems: recentInfo[0],
         count: recentInfo[1],
