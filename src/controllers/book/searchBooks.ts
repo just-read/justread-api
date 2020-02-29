@@ -51,13 +51,13 @@ const searchBooks = async (
       } else {
         total = await getRepository(Book)
           .createQueryBuilder('book')
-          .where('book.title LIKE :searchTerm', { searchTerm })
-          .orWhere('book.author LIKE :searchTerm', { searchTerm })
+          .where('book.title LIKE :searchTerm', { searchTerm: `%${searchTerm}%` })
+          .orWhere('book.authors LIKE :searchTerm', { searchTerm: `%${searchTerm}%` })
           .getCount();
         books = await getRepository(Book)
           .createQueryBuilder('book')
-          .where('book.title LIKE :searchTerm', { searchTerm })
-          .orWhere('book.author LIKE :searchTerm', { searchTerm })
+          .where('book.title LIKE :searchTerm', { searchTerm: `%${searchTerm}%` })
+          .orWhere('book.authors LIKE :searchTerm', { searchTerm: `%${searchTerm}%` })
           .limit(limit)
           .offset(offset)
           .orderBy('id', 'DESC')
