@@ -18,6 +18,7 @@ const createNewBookshelf = async (
     }
 
     const {
+      user: { id: userId },
       body: { name }
     } = req;
 
@@ -25,7 +26,7 @@ const createNewBookshelf = async (
       throw new InvalidParamError('필요한 정보가 누락되었습니다.');
     }
 
-    const newBookshelf = await Bookshelf.create({ name }).save();
+    const newBookshelf = await Bookshelf.create({ name, userId }).save();
     res.status(201).json({
       success: true,
       message: null,
