@@ -1,17 +1,17 @@
 import { Response, NextFunction } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, getConnection } from 'typeorm';
+import Book from '../../entities/book';
 import Bookshelf from '../../entities/bookshelf';
 import { CustomRequest } from '../../utils/auth';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
 
-interface GetBookshelfDetailsRequest extends CustomRequest {
-  params: {
-    bookshelfId: string;
-  };
+interface RemoveBookRequest extends CustomRequest {
+  params: { bookshelfId: string };
+  body: { bookUniqueId: string };
 }
 
-const getBookshelfDetails = async (
-  req: GetBookshelfDetailsRequest,
+const removeBook = async (
+  req: RemoveBookRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
@@ -22,36 +22,44 @@ const getBookshelfDetails = async (
 
     const {
       params: { bookshelfId },
+      body: { bookUniqueId },
       user: { id: userId }
     } = req;
 
-    if (!bookshelfId) {
+    if (!bookshelfId || !bookUniqueId) {
       throw new InvalidParamError('필요한 정보가 존재하지 않습니다.');
     }
 
     const parsedBookshelfId = parseInt(bookshelfId, 10);
 
-    const bookshelfDetails = await getRepository(Bookshelf)
+    const bookshelf = await getRepository(Bookshelf)
       .createQueryBuilder('bookshelf')
-      .leftJoinAndSelect('bookshelf.books', 'book')
+      .innerJoinAndSelect('bookshelf.books', 'book')
       .where('bookshelf.id = :bookshelfId', { bookshelfId: parsedBookshelfId })
       .andWhere('bookshelf.userId = :userId', { userId })
+      .andWhere('book.uniqueId = :bookUniqueId', { bookUniqueId })
       .getOne();
 
-    if (!bookshelfDetails) {
+    if (!bookshelf) {
       throw new NotFoundError('일치하는 정보를 찾을 수 없습니다.');
     }
 
-    res.status(200).json({
-      success: true,
-      message: null,
-      result: {
-        bookshelfDetails
-      }
-    });
+    const book = await getRepository(Book).findOne({ uniqueId: bookUniqueId });
+
+    if (!book) {
+      throw new NotFoundError('일치하는 정보를 찾을 수 없습니다.');
+    }
+
+    await getConnection()
+      .createQueryBuilder()
+      .relation(Bookshelf, 'books')
+      .of(bookshelf)
+      .remove({ id: book.id });
+
+    res.status(200).json({ success: true, message: null });
   } catch (error) {
     next(error);
   }
 };
 
-export default getBookshelfDetails;
+export default removeBook;

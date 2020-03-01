@@ -1,9 +1,9 @@
 import { Response, NextFunction } from 'express';
-import { CustomRequest } from '../../utils/auth';
-import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
 import { getRepository, getConnection } from 'typeorm';
 import Book from '../../entities/book';
 import Bookshelf from '../../entities/bookshelf';
+import { CustomRequest } from '../../utils/auth';
+import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
 
 interface AddBookRequest extends CustomRequest {
   params: {

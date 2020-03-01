@@ -1,21 +1,24 @@
 import { Router } from 'express';
-import { privateRoute } from '../../utils/auth';
 import {
+  addBook,
   createNewBookshelf,
-  getBookshelves,
   getBookshelfDetails,
+  getBookshelves,
   modifyBookshelf,
-  removeBookshelf,
-  addBook
+  removeBook,
+  removeBookshelf
 } from '../../controllers/bookshelfControllers';
+import { privateRoute } from '../../utils/auth';
 
 const bookshelfRouter = Router();
 
-bookshelfRouter.get('', privateRoute, getBookshelves);
-bookshelfRouter.get('/:bookshelfId', privateRoute, getBookshelfDetails);
 bookshelfRouter.post('', privateRoute, createNewBookshelf);
+bookshelfRouter.get('', privateRoute, getBookshelves);
+bookshelfRouter.delete('', privateRoute, removeBookshelf);
+
 bookshelfRouter.post('/:bookshelfId', privateRoute, addBook);
+bookshelfRouter.get('/:bookshelfId', privateRoute, getBookshelfDetails);
 bookshelfRouter.put('/:bookshelfId', privateRoute, modifyBookshelf);
-bookshelfRouter.delete('/:bookshelfId', privateRoute, removeBookshelf);
+bookshelfRouter.delete('/:bookshelfId', privateRoute, removeBook);
 
 export default bookshelfRouter;
