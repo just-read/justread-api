@@ -56,7 +56,13 @@ const removeBook = async (
       .of(bookshelf)
       .remove({ id: book.id });
 
-    res.status(200).json({ success: true, message: null });
+    res.status(200).json({
+      success: true,
+      message: null,
+      result: {
+        removedBook: book
+      }
+    });
   } catch (error) {
     next(error);
   }
