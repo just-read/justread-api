@@ -6,7 +6,7 @@ import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils
 
 interface ModifyBookRequest extends CustomRequest {
   body: {
-    uniqueBookId: string;
+    bookUniqueId: string;
     title: string;
     isbn: string;
     description: string;
@@ -26,21 +26,21 @@ const modifyBook = async (
     }
 
     const {
-      body: { uniqueBookId, title, isbn, description, year, authors }
+      body: { bookUniqueId, title, isbn, description, year, authors }
     } = req;
 
-    if (!uniqueBookId || !title || !isbn || !authors) {
+    if (!bookUniqueId || !title || !isbn || !authors) {
       throw new InvalidParamError('필요한 정보가 누락되었습니다.');
     }
 
-    const existingBook = await getRepository(Book).findOne({ uniqueId: uniqueBookId });
+    const existingBook = await getRepository(Book).findOne({ uniqueId: bookUniqueId });
 
     if (!existingBook) {
       throw new NotFoundError('책 정보가 존재하지 않습니다.');
     }
 
     const modifiedBook = await getRepository(Book).update(
-      { uniqueId: uniqueBookId },
+      { uniqueId: bookUniqueId },
       {
         title,
         isbn,

@@ -268,7 +268,7 @@ GET {{API_URL}}/v1/books?p={search_term}
 ### 책 상세
 
 ```
-GET {{API_URL}}/v1/books/{uniqueBookId}
+GET {{API_URL}}/v1/books/{bookUniqueId}
 ```
 
 ### 새 책 추가
@@ -280,7 +280,7 @@ POST {{API_URL}}/v1/books
 ### 책 수정
 
 ```
-PUT {{API_URL}}/v1/books/{uniqueBookId}
+PUT {{API_URL}}/v1/books/{bookUniqueId}
 ```
 
 ## 리뷰
