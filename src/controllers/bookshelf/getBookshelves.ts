@@ -1,10 +1,18 @@
 import { Response, NextFunction } from 'express';
+import { getRepository } from 'typeorm';
 import { CustomRequest } from '../../utils/auth';
 import { UnauthorizedError } from '../../utils/customErrors';
 import Bookshelf from '../../entities/bookshelf';
 
+interface GetBookshelvesRequest extends CustomRequest {
+  query: {
+    page: number;
+    limit: number;
+  };
+}
+
 const getBookshelves = async (
-  req: CustomRequest,
+  req: GetBookshelvesRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
@@ -14,10 +22,14 @@ const getBookshelves = async (
     }
 
     const {
-      user: { id: userId }
+      user: { id: userId },
+      query: { page = 1, limit = 10 }
     } = req;
 
-    const bookShelfItems = await Bookshelf.findAndCount({
+    const total = await getRepository(Bookshelf)
+      .createQueryBuilder('bookshelf')
+      .getCount();
+    const [bookshelves, count] = await Bookshelf.findAndCount({
       where: {
         userId
       }
@@ -27,7 +39,13 @@ const getBookshelves = async (
       success: true,
       message: null,
       result: {
-        bookShelfItems
+        bookshelves,
+        pageInfo: {
+          total,
+          current: page,
+          limit,
+          count
+        }
       }
     });
   } catch (error) {

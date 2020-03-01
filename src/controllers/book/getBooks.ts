@@ -27,6 +27,7 @@ const getBooks = async (
     const {
       query: { type = EnumBookListType.recent, page = 1, limit = 10 }
     } = req;
+
     if (!(type in EnumBookListType)) {
       throw new InvalidParamError('type이 올바르지 않습니다.');
     }
