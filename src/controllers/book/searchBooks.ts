@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
+import { isISBN } from '../../utils/validation';
 import { IBookList } from './types';
 
 interface SearchBooksRequest extends Request {
@@ -21,14 +22,6 @@ const searchBooks = async (
   } = req;
   if (searchTerm) {
     try {
-      const isISBN = (term: string): boolean => {
-        const isbnRegexp = new RegExp(/^.d{13}$/);
-        if (isbnRegexp.test(term)) {
-          return true;
-        }
-        return false;
-      };
-
       const offset = page * limit;
 
       /**

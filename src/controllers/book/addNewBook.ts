@@ -2,6 +2,7 @@ import { Response, NextFunction } from 'express';
 import Book from '../../entities/book';
 import { InvalidParamError, UnauthorizedError } from '../../utils/customErrors';
 import { CustomRequest } from '../../utils/auth';
+import { isISBN } from '../../utils/validation';
 
 interface AddNewBookRequest extends CustomRequest {
   body: {
@@ -29,6 +30,10 @@ const addNewBook = async (
 
     if (!title || !isbn || !authors) {
       throw new InvalidParamError('필요한 정보가 누락되었습니다.');
+    }
+
+    if (!isISBN(isbn)) {
+      throw new InvalidParamError('유효하지 않은 ISBN입니다.');
     }
 
     const newBook = await Book.create({ title, isbn, description, year, authors }).save();
