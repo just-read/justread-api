@@ -31,7 +31,7 @@ const getBooks = async (
       throw new InvalidParamError('type이 올바르지 않습니다.');
     }
 
-    const offset = page * limit;
+    const offset = (page - 1) * limit;
 
     const getRecentBookListInfo = async (): Promise<IBookList> => {
       const total = await getRepository(Book)

@@ -22,7 +22,7 @@ const searchBooks = async (
   } = req;
   if (searchTerm) {
     try {
-      const offset = page * limit;
+      const offset = (page - 1) * limit;
 
       /**
        * 책 숫자가 많아지면 성능 저하가 있을 것으로 예상됨
