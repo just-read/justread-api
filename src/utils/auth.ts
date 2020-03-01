@@ -57,16 +57,19 @@ const consumeAuthToken = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const {
-    headers: { authorization: authToken }
-  } = req;
-  if (!authToken) {
-    return next();
+  try {
+    const {
+      headers: { authorization: authToken }
+    } = req;
+    if (authToken) {
+      const { id, email } = await decodeToken<AuthTokenData>(authToken);
+      const user = await User.findOne({ id, email });
+      req.user = user;
+    }
+    next();
+  } catch (error) {
+    next(error);
   }
-  const { id, email } = await decodeToken<AuthTokenData>(authToken);
-  const user = await User.findOne({ id, email });
-  req.user = user;
-  return next();
 };
 
 const privateRoute = (req: CustomRequest, res: Response, next: NextFunction): void => {
@@ -74,7 +77,7 @@ const privateRoute = (req: CustomRequest, res: Response, next: NextFunction): vo
   if (!user) {
     throw new UnauthorizedError('인증 정보가 존재하지 않습니다.');
   }
-  return next();
+  next();
 };
 
 export { generateToken, decodeToken, consumeAuthToken, privateRoute };
