@@ -5,7 +5,7 @@ import { CustomRequest } from '../../utils/auth';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
 
 interface RemoveBookshelfRequest extends CustomRequest {
-  params: {
+  body: {
     bookshelfId: string;
   };
 }
@@ -21,7 +21,7 @@ const removeBookshelf = async (
     }
 
     const {
-      params: { bookshelfId },
+      body: { bookshelfId },
       user: { id: userId }
     } = req;
 
