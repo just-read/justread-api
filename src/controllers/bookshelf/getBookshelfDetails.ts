@@ -3,6 +3,7 @@ import { CustomRequest } from '../../utils/auth';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
 import Bookshelf from '../../entities/bookshelf';
 import { getRepository } from 'typeorm';
+import Book from '../../entities/book';
 
 interface GetBookshelfDetailsRequest extends CustomRequest {
   params: {
@@ -31,10 +32,12 @@ const getBookshelfDetails = async (
 
     const parsedBookshelfId = parseInt(bookshelfId, 10);
 
-    const bookshelfDetails = await getRepository(Bookshelf).findOne({
-      id: parsedBookshelfId,
-      userId
-    });
+    const bookshelfDetails = await getRepository(Bookshelf)
+      .createQueryBuilder('bookshelf')
+      .innerJoinAndSelect('bookshelf.books', 'book')
+      .where('bookshelf.id = :bookshelfId', { bookshelfId: parsedBookshelfId })
+      .andWhere('bookshelf.userId = :userId', { userId })
+      .getOne();
 
     if (!bookshelfDetails) {
       throw new NotFoundError('일치하는 정보를 찾을 수 없습니다.');
