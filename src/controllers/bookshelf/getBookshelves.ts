@@ -26,14 +26,18 @@ const getBookshelves = async (
       query: { page = 1, limit = 10 }
     } = req;
 
+    const offset = (page - 1) * limit;
+
     const total = await getRepository(Bookshelf)
       .createQueryBuilder('bookshelf')
+      .where('bookshelf.userId = :userId', { userId })
       .getCount();
-    const [bookshelves, count] = await Bookshelf.findAndCount({
-      where: {
-        userId
-      }
-    });
+    const [bookshelves, count] = await getRepository(Bookshelf)
+      .createQueryBuilder('bookshelf')
+      .where('bookshelf.userId = :userId', { userId })
+      .limit(limit)
+      .offset(offset)
+      .getManyAndCount();
 
     res.status(200).json({
       success: true,
