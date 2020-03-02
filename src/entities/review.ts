@@ -1,14 +1,16 @@
 import {
-  Entity,
   BaseEntity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from 'typeorm';
-import User from './user';
 import Book from './book';
+import User from './user';
+import Rating from './rating';
 
 @Entity()
 class Review extends BaseEntity {
@@ -41,6 +43,12 @@ class Review extends BaseEntity {
     book => book.ratings
   )
   book!: Book;
+
+  @OneToOne(
+    type => Rating,
+    rating => rating.review
+  )
+  rating!: Rating;
 }
 
 export default Review;
