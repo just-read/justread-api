@@ -35,7 +35,7 @@ const getBookReview = async (
     const bookReview = await getRepository(Rating)
       .createQueryBuilder('rating')
       .leftJoinAndSelect('rating.review', 'review')
-      .where('rating.id = :bookId', { bookId: book.id })
+      .where('rating.bookId = :bookId', { bookId: book.id })
       .andWhere('rating.userId = :userId', { userId: req.user.id })
       .getOne();
 
