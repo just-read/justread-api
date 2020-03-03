@@ -24,7 +24,7 @@ const getBookReviews = async (
     const book = await getRepository(Book).findOne({ uniqueId: bookUniqueId });
 
     if (!book) {
-      throw new NotFoundError('일치하는 정보를 찾을 수 없습니다.');
+      throw new NotFoundError();
     }
 
     const [reviews, count] = await getRepository(Rating)

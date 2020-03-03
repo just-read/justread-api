@@ -27,7 +27,7 @@ const logIn = async (req: LogInRequest, res: Response, next: NextFunction): Prom
     }
     const checkPassword = await user.comparePassword(password);
     if (!checkPassword) {
-      throw new IncorrectLoginRequestError('입력하신 정보가 올바르지 않습니다.');
+      throw new IncorrectLoginRequestError();
     }
     const { accessToken, refreshToken } = await user.generateUserTokens();
     res.status(200).json({

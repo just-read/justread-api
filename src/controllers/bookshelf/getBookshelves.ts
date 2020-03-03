@@ -18,7 +18,7 @@ const getBookshelves = async (
 ): Promise<void> => {
   try {
     if (!req.user) {
-      throw new UnauthorizedError('인증 정보가 존재하지 않습니다.');
+      throw new UnauthorizedError();
     }
 
     const {

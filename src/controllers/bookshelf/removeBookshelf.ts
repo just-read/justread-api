@@ -37,7 +37,7 @@ const removeBookshelf = async (
     });
 
     if (!bookshelf) {
-      throw new NotFoundError('일치하는 정보를 찾을 수 없습니다.');
+      throw new NotFoundError();
     }
 
     await getRepository(Bookshelf).delete({ id: bookshelf.id });

@@ -40,7 +40,7 @@ const modifyBookshelf = async (
   });
 
   if (!bookshelf) {
-    throw new NotFoundError('일치하는 정보를 찾을 수 없습니다.');
+    throw new NotFoundError();
   }
 
   await getRepository(Bookshelf).update({ id: bookshelf.id }, { name: bookshelfName });

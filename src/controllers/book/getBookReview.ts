@@ -19,7 +19,7 @@ const getBookReview = async (
 ): Promise<void> => {
   try {
     if (!req.user) {
-      throw new UnauthorizedError('인증 정보가 존재하지 않습니다.');
+      throw new UnauthorizedError();
     }
 
     const {
@@ -29,7 +29,7 @@ const getBookReview = async (
     const book = await getRepository(Book).findOne({ uniqueId: bookUniqueId });
 
     if (!book) {
-      throw new NotFoundError('일치하는 정보를 찾을 수 없습니다.');
+      throw new NotFoundError();
     }
 
     const bookReview = await getRepository(Rating)

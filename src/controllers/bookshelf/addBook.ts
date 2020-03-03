@@ -17,7 +17,7 @@ interface AddBookRequest extends CustomRequest {
 const addBook = async (req: AddBookRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     if (!req.user) {
-      throw new UnauthorizedError('인증 정보가 존재하지 않습니다.');
+      throw new UnauthorizedError();
     }
 
     const {
@@ -36,7 +36,7 @@ const addBook = async (req: AddBookRequest, res: Response, next: NextFunction): 
     const book = await getRepository(Book).findOne({ uniqueId: bookUniqueId });
 
     if (!bookshelf || !book) {
-      throw new NotFoundError('일치하는 정보를 찾을 수 없습니다.');
+      throw new NotFoundError();
     }
 
     await getConnection()

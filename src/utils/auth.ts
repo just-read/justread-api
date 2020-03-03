@@ -75,7 +75,7 @@ const consumeAuthToken = async (
 const privateRoute = (req: CustomRequest, res: Response, next: NextFunction): void => {
   const { user } = req;
   if (!user) {
-    throw new UnauthorizedError('인증 정보가 존재하지 않습니다.');
+    throw new UnauthorizedError();
   }
   next();
 };

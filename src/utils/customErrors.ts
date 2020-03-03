@@ -17,7 +17,7 @@ class AlreadyExistsError extends CustomError {
 }
 
 class NotFoundError extends CustomError {
-  constructor(message: string, status = 404) {
+  constructor(message = '일치하는 정보를 찾을 수 없습니다.', status = 404) {
     super(message, status);
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, NotFoundError);
@@ -35,7 +35,7 @@ class InvalidParamError extends CustomError {
 }
 
 class IncorrectLoginRequestError extends CustomError {
-  constructor(message: string, status = 401) {
+  constructor(message = '입력하신 정보가 올바르지 않습니다.', status = 401) {
     super(message, status);
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, InvalidParamError);
@@ -44,7 +44,7 @@ class IncorrectLoginRequestError extends CustomError {
 }
 
 class UnauthorizedError extends CustomError {
-  constructor(message: string, status = 401) {
+  constructor(message = '인증 정보가 존재하지 않습니다.', status = 401) {
     super(message, status);
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, InvalidParamError);
