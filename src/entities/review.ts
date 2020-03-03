@@ -17,11 +17,14 @@ class Review extends BaseEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   id!: number;
 
-  @Column({ type: 'int', unsigned: true })
+  @Column({ type: 'bigint', unsigned: true })
   userId!: number;
 
-  @Column({ type: 'int', unsigned: true })
+  @Column({ type: 'bigint', unsigned: true })
   bookId!: number;
+
+  @Column({ type: 'bigint', unsigned: true })
+  ratingId!: number;
 
   @Column({ type: 'text', nullable: false })
   content!: string;
