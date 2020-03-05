@@ -1,11 +1,11 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository, getConnection } from 'typeorm';
 import Book from '../../entities/book';
 import Bookshelf from '../../entities/bookshelf';
-import { CustomRequest } from '../../utils/auth';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
+import User from '../../entities/user';
 
-interface AddBookRequest extends CustomRequest {
+interface AddBookRequest extends Request {
   params: {
     bookshelfId: string;
   };
@@ -20,10 +20,10 @@ const addBook = async (req: AddBookRequest, res: Response, next: NextFunction): 
       throw new UnauthorizedError();
     }
 
+    const { id: userId } = req.user as User;
     const {
       params: { bookshelfId },
       body: { bookUniqueId },
-      user: { id: userId }
     } = req;
 
     if (!bookshelfId || !bookUniqueId) {
@@ -50,8 +50,8 @@ const addBook = async (req: AddBookRequest, res: Response, next: NextFunction): 
       message: null,
       result: {
         // 무슨 데이터를 더 줘야 할까?
-        bookshelf
-      }
+        bookshelf,
+      },
     });
   } catch (error) {
     next(error);

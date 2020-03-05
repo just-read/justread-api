@@ -1,10 +1,10 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
-import { CustomRequest } from '../../utils/auth';
 import { UnauthorizedError } from '../../utils/customErrors';
 import Bookshelf from '../../entities/bookshelf';
+import User from '../../entities/user';
 
-interface GetBookshelvesRequest extends CustomRequest {
+interface GetBookshelvesRequest extends Request {
   query: {
     page: number;
     limit: number;
@@ -21,9 +21,9 @@ const getBookshelves = async (
       throw new UnauthorizedError();
     }
 
+    const { id: userId } = req.user as User;
     const {
-      user: { id: userId },
-      query: { page = 1, limit = 10 }
+      query: { page = 1, limit = 10 },
     } = req;
 
     const offset = (page - 1) * limit;
@@ -48,9 +48,9 @@ const getBookshelves = async (
           total,
           current: page,
           limit,
-          count
-        }
-      }
+          count,
+        },
+      },
     });
   } catch (error) {
     next(error);

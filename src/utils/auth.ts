@@ -1,7 +1,15 @@
 import { NextFunction, Response, Request } from 'express';
+import passport from 'passport';
+import {
+  StrategyOptions,
+  ExtractJwt,
+  Strategy as JWTStrategy,
+  VerifiedCallback,
+} from 'passport-jwt';
 import jwt, { SignOptions } from 'jsonwebtoken';
 import User from '../entities/user';
 import { UnauthorizedError } from './customErrors';
+import { getRepository } from 'typeorm';
 
 export type TokenData = {
   exp: number;
@@ -18,17 +26,18 @@ export type RefreshTokenData = {
   email: string;
 } & TokenData;
 
-export interface CustomRequest extends Request {
-  user?: User;
-}
-
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY || 'DEFAULT_JSON_SECRET_KEY';
+
+const jwtOptions: StrategyOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: TOKEN_SECRET_KEY,
+};
 
 const generateToken = async (user: User, options?: SignOptions): Promise<string> => {
   const jwtOptions: SignOptions = {
     issuer: 'justread.best',
     expiresIn: '7d',
-    ...options
+    ...options,
   };
   if (!jwtOptions.expiresIn) {
     delete jwtOptions.expiresIn;
@@ -52,27 +61,30 @@ const decodeToken = async <T = any>(token: string): Promise<T> =>
     });
   });
 
-const consumeAuthToken = async (
-  req: CustomRequest,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
+const verifyJWTUser = async (payload: AuthTokenData, done: VerifiedCallback): Promise<void> => {
   try {
-    const {
-      headers: { authorization: authToken }
-    } = req;
-    if (authToken) {
-      const { id, email } = await decodeToken<AuthTokenData>(authToken);
-      const user = await User.findOne({ id, email });
-      req.user = user;
+    const user = await getRepository(User).findOne({ id: payload.id });
+    if (user) {
+      return done(null, user);
     }
-    next();
+    return done(null, null);
   } catch (error) {
-    next(error);
+    return done(error, null);
   }
 };
 
-const privateRoute = (req: CustomRequest, res: Response, next: NextFunction): void => {
+const passportAuthenticate = (req: Request, res: Response, next: NextFunction): void =>
+  passport.authenticate(['jwt'], { session: false }, (error: Error, user: User | null) => {
+    if (error) {
+      next(error);
+    }
+    if (user) {
+      req.user = user;
+    }
+    next();
+  })(req, res, next);
+
+const privateRoute = (req: Request, res: Response, next: NextFunction): void => {
   const { user } = req;
   if (!user) {
     throw new UnauthorizedError();
@@ -80,4 +92,6 @@ const privateRoute = (req: CustomRequest, res: Response, next: NextFunction): vo
   next();
 };
 
-export { generateToken, decodeToken, consumeAuthToken, privateRoute };
+passport.use(new JWTStrategy(jwtOptions, verifyJWTUser));
+
+export { generateToken, decodeToken, passportAuthenticate, privateRoute };

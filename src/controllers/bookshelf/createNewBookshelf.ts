@@ -1,9 +1,9 @@
-import { Response, NextFunction } from 'express';
-import { CustomRequest } from '../../utils/auth';
-import { UnauthorizedError, InvalidParamError } from '../../utils/customErrors';
+import { Request, Response, NextFunction } from 'express';
 import Bookshelf from '../../entities/bookshelf';
+import User from '../../entities/user';
+import { UnauthorizedError, InvalidParamError } from '../../utils/customErrors';
 
-interface CreateNewBookshelfRequest extends CustomRequest {
+interface CreateNewBookshelfRequest extends Request {
   body: { name: string };
 }
 
@@ -17,9 +17,9 @@ const createNewBookshelf = async (
       throw new UnauthorizedError('인증 정보가 존재하지 않습니다');
     }
 
+    const { id: userId } = req.user as User;
     const {
-      user: { id: userId },
-      body: { name }
+      body: { name },
     } = req;
 
     if (!name) {
@@ -31,8 +31,8 @@ const createNewBookshelf = async (
       success: true,
       message: null,
       result: {
-        newBookshelf
-      }
+        newBookshelf,
+      },
     });
   } catch (error) {
     next(error);

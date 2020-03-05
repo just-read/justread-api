@@ -10,10 +10,14 @@ interface RefreshTokensRequest extends Request {
   };
 }
 
-const refreshTokens = async (req: RefreshTokensRequest, res: Response, next: NextFunction) => {
+const refreshTokens = async (
+  req: RefreshTokensRequest,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const {
-      body: { refreshToken: originalRefreshToken }
+      body: { refreshToken: originalRefreshToken },
     } = req;
     const decoded = await decodeToken<RefreshTokenData>(originalRefreshToken);
     const user = await getRepository(User).findOne(decoded.id);
@@ -29,8 +33,8 @@ const refreshTokens = async (req: RefreshTokensRequest, res: Response, next: Nex
       message: null,
       result: {
         accessToken,
-        refreshToken
-      }
+        refreshToken,
+      },
     });
   } catch (error) {
     next(error);

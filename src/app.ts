@@ -2,9 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
+import passport from 'passport';
 import globalRouter from './routes/global';
 import { globalErrorHandler } from './utils/middlewares/globalErrorHandler';
-import { consumeAuthToken } from './utils/auth';
+import { passportAuthenticate } from './utils/auth';
 
 const createApp = async (): Promise<express.Application> => {
   const app = express();
@@ -13,7 +14,8 @@ const createApp = async (): Promise<express.Application> => {
   app.use(bodyParser.json());
   app.use(cors());
   app.use(morgan('combined'));
-  app.use(consumeAuthToken);
+  app.use(passport.initialize());
+  app.use(passportAuthenticate);
 
   app.use('', globalRouter);
 

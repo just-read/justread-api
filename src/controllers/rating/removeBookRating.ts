@@ -1,10 +1,10 @@
-import { Response, NextFunction } from 'express';
-import { CustomRequest } from '../../utils/auth';
-import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Rating from '../../entities/rating';
+import User from '../../entities/user';
+import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
 
-interface RemoveBookRatingRequest extends CustomRequest {
+interface RemoveBookRatingRequest extends Request {
   body: {
     ratingId: number;
   };
@@ -20,9 +20,9 @@ const removeRating = async (
       throw new UnauthorizedError('인증 정보가 없습니다.');
     }
 
+    const { id: userId } = req.user as User;
     const {
       body: { ratingId },
-      user: { id: userId }
     } = req;
 
     if (!ratingId) {
@@ -41,8 +41,8 @@ const removeRating = async (
       success: true,
       message: null,
       result: {
-        removedRating: rating
-      }
+        removedRating: rating,
+      },
     });
   } catch (error) {
     next(error);

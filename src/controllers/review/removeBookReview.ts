@@ -1,10 +1,10 @@
-import { CustomRequest } from '../../utils/auth';
-import { Response, NextFunction } from 'express';
-import { UnauthorizedError, NotFoundError } from '../../utils/customErrors';
-import Review from '../../entities/review';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
+import Review from '../../entities/review';
+import User from '../../entities/user';
+import { UnauthorizedError, NotFoundError } from '../../utils/customErrors';
 
-interface RemoveBookReviewRequest extends CustomRequest {
+interface RemoveBookReviewRequest extends Request {
   body: {
     reviewId: number;
   };
@@ -20,14 +20,14 @@ const removeBookReview = async (
       throw new UnauthorizedError();
     }
 
+    const { id: userId } = req.user as User;
     const {
       body: { reviewId },
-      user: { id: userId }
     } = req;
 
     const review = await getRepository(Review).findOne({
       id: reviewId,
-      userId
+      userId,
     });
 
     if (!review) {
@@ -40,8 +40,8 @@ const removeBookReview = async (
       success: true,
       message: null,
       result: {
-        removedReview: review
-      }
+        removedReview: review,
+      },
     });
   } catch (error) {
     next(error);

@@ -1,10 +1,10 @@
-import { CustomRequest } from '../../utils/auth';
-import { Response, NextFunction } from 'express';
-import { UnauthorizedError, NotFoundError } from '../../utils/customErrors';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Review from '../../entities/review';
+import User from '../../entities/user';
+import { UnauthorizedError, NotFoundError } from '../../utils/customErrors';
 
-interface ModifyBookReviewRequest extends CustomRequest {
+interface ModifyBookReviewRequest extends Request {
   body: {
     reviewId: number;
     reviewContent: string;
@@ -21,9 +21,9 @@ const modifyBookReview = async (
       throw new UnauthorizedError();
     }
 
+    const { id: userId } = req.user as User;
     const {
       body: { reviewId, reviewContent },
-      user: { id: userId }
     } = req;
 
     const review = await getRepository(Review).findOne({ id: reviewId, userId });
@@ -38,8 +38,8 @@ const modifyBookReview = async (
       success: true,
       message: null,
       result: {
-        updatedReview: { ...review, content: reviewContent }
-      }
+        updatedReview: { ...review, content: reviewContent },
+      },
     });
   } catch (error) {
     next(error);

@@ -1,10 +1,10 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Bookshelf from '../../entities/bookshelf';
-import { CustomRequest } from '../../utils/auth';
+import User from '../../entities/user';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
 
-interface RemoveBookshelfRequest extends CustomRequest {
+interface RemoveBookshelfRequest extends Request {
   body: {
     bookshelfId: string;
   };
@@ -20,9 +20,9 @@ const removeBookshelf = async (
       throw new UnauthorizedError('인증 정보가 없습니다.');
     }
 
+    const { id: userId } = req.user as User;
     const {
       body: { bookshelfId },
-      user: { id: userId }
     } = req;
 
     if (!bookshelfId) {
@@ -33,7 +33,7 @@ const removeBookshelf = async (
 
     const bookshelf = await getRepository(Bookshelf).findOne({
       id: parsedBookshelfId,
-      userId
+      userId,
     });
 
     if (!bookshelf) {
@@ -46,8 +46,8 @@ const removeBookshelf = async (
       success: true,
       message: null,
       result: {
-        removedBookshelf: bookshelf
-      }
+        removedBookshelf: bookshelf,
+      },
     });
   } catch (error) {
     next(error);

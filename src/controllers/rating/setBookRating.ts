@@ -1,11 +1,11 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
-import { CustomRequest } from '../../utils/auth';
-import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
 import Rating from '../../entities/rating';
+import User from '../../entities/user';
+import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
 
-interface SetBookRatingRequest extends CustomRequest {
+interface SetBookRatingRequest extends Request {
   body: {
     bookUniqueId: string;
     rating: number;
@@ -22,9 +22,9 @@ const setBookRating = async (
       throw new UnauthorizedError('인증 정보가 없습니다.');
     }
 
+    const { id: userId } = req.user as User;
     const {
       body: { bookUniqueId, rating },
-      user: { id: userId }
     } = req;
 
     if (!bookUniqueId || !rating) {
@@ -43,8 +43,8 @@ const setBookRating = async (
       success: true,
       message: null,
       result: {
-        newRating
-      }
+        newRating,
+      },
     });
   } catch (error) {
     next(error);

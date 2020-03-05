@@ -1,12 +1,12 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
 import Rating from '../../entities/rating';
 import Review from '../../entities/review';
-import { CustomRequest } from '../../utils/auth';
+import User from '../../entities/user';
 import { UnauthorizedError, NotFoundError } from '../../utils/customErrors';
 
-interface AddBookReviewRequest extends CustomRequest {
+interface AddBookReviewRequest extends Request {
   body: {
     bookUniqueId: string;
     reviewContent: string;
@@ -23,9 +23,9 @@ const addBookReview = async (
       throw new UnauthorizedError();
     }
 
+    const { id: userId } = req.user as User;
     const {
       body: { bookUniqueId, reviewContent },
-      user: { id: userId }
     } = req;
 
     const book = await getRepository(Book).findOne({ uniqueId: bookUniqueId });
@@ -50,15 +50,15 @@ const addBookReview = async (
       userId,
       bookId: book.id,
       ratingId: rating.id,
-      content: reviewContent
+      content: reviewContent,
     }).save();
 
     res.status(201).json({
       success: true,
       message: null,
       result: {
-        newReview
-      }
+        newReview,
+      },
     });
   } catch (error) {
     next(error);

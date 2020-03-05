@@ -1,10 +1,10 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Bookshelf from '../../entities/bookshelf';
-import { CustomRequest } from '../../utils/auth';
+import User from '../../entities/user';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
 
-interface GetBookshelfDetailsRequest extends CustomRequest {
+interface GetBookshelfDetailsRequest extends Request {
   params: {
     bookshelfId: string;
   };
@@ -20,9 +20,9 @@ const getBookshelfDetails = async (
       throw new UnauthorizedError('인증 정보가 없습니다.');
     }
 
+    const { id: userId } = req.user as User;
     const {
       params: { bookshelfId },
-      user: { id: userId }
     } = req;
 
     if (!bookshelfId) {
@@ -46,8 +46,8 @@ const getBookshelfDetails = async (
       success: true,
       message: null,
       result: {
-        bookshelfDetails
-      }
+        bookshelfDetails,
+      },
     });
   } catch (error) {
     next(error);

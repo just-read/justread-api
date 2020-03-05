@@ -1,10 +1,9 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import Book from '../../entities/book';
 import { InvalidParamError, UnauthorizedError } from '../../utils/customErrors';
-import { CustomRequest } from '../../utils/auth';
 import { isISBN } from '../../utils/validation';
 
-interface AddNewBookRequest extends CustomRequest {
+interface AddNewBookRequest extends Request {
   body: {
     title: string;
     isbn: string;
@@ -25,7 +24,7 @@ const addNewBook = async (
     }
 
     const {
-      body: { title, isbn, description, year, authors }
+      body: { title, isbn, description, year, authors },
     } = req;
 
     if (!title || !isbn || !authors) {
@@ -41,8 +40,8 @@ const addNewBook = async (
       success: true,
       message: null,
       result: {
-        newBook
-      }
+        newBook,
+      },
     });
   } catch (error) {
     next(error);

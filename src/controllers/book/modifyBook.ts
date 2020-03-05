@@ -1,10 +1,9 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
-import { CustomRequest } from '../../utils/auth';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
 
-interface ModifyBookRequest extends CustomRequest {
+interface ModifyBookRequest extends Request {
   body: {
     bookUniqueId: string;
     title: string;
@@ -26,7 +25,7 @@ const modifyBook = async (
     }
 
     const {
-      body: { bookUniqueId, title, isbn, description, year, authors }
+      body: { bookUniqueId, title, isbn, description, year, authors },
     } = req;
 
     if (!bookUniqueId || !title || !isbn || !authors) {
@@ -46,13 +45,13 @@ const modifyBook = async (
         isbn,
         description,
         year,
-        authors
+        authors,
       }
     );
     res.status(200).json({
       success: true,
       message: null,
-      result: { modifiedBook }
+      result: { modifiedBook },
     });
   } catch (error) {
     next(error);
