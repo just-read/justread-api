@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import User from '../../entities/user';
-import { AlreadyExistsError, InvalidParamError } from '../../utils/customErrors';
+import { AlreadyExistsError, InvalidParamError } from '../../utils/middlewares/customErrors';
 
 interface SignUpRequest extends Request {
   body: {
@@ -13,7 +13,7 @@ interface SignUpRequest extends Request {
 const signUp = async (req: SignUpRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const {
-      body: { email, password, nickName }
+      body: { email, password, nickName },
     } = req;
     if (!email || !password || !nickName) {
       throw new InvalidParamError('필요한 정보가 누락되었습니다.');
@@ -29,8 +29,8 @@ const signUp = async (req: SignUpRequest, res: Response, next: NextFunction): Pr
       message: null,
       result: {
         accessToken,
-        refreshToken
-      }
+        refreshToken,
+      },
     });
   } catch (error) {
     next(error);

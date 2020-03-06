@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
-import { decodeToken, RefreshTokenData } from '../../utils/auth';
-import { UnauthorizedError } from '../../utils/customErrors';
 import User from '../../entities/user';
+import { decodeToken, RefreshTokenData } from '../../utils/auth';
+import { UnauthorizedError } from '../../utils/middlewares/customErrors';
 
 interface RefreshTokensRequest extends Request {
   body: {
@@ -10,11 +10,7 @@ interface RefreshTokensRequest extends Request {
   };
 }
 
-const refreshTokens = async (
-  req: RefreshTokensRequest,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
+const refreshTokens = async (req: RefreshTokensRequest, res: Response, next: NextFunction) => {
   try {
     const {
       body: { refreshToken: originalRefreshToken },
@@ -26,7 +22,7 @@ const refreshTokens = async (
     }
     const { accessToken, refreshToken } = await user.refreshUserTokens(
       originalRefreshToken,
-      decoded.exp
+      decoded.exp,
     );
     res.status(200).json({
       success: true,

@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import User from '../../entities/user';
 import {
-  NotFoundError,
+  InvalidParamError,
   IncorrectLoginRequestError,
-  InvalidParamError
-} from '../../utils/customErrors';
+  NotFoundError,
+} from '../../utils/middlewares/customErrors';
 
 interface LogInRequest extends Request {
   body: {
@@ -16,7 +16,7 @@ interface LogInRequest extends Request {
 const logIn = async (req: LogInRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const {
-      body: { email, password }
+      body: { email, password },
     } = req;
     if (!email || !password) {
       throw new InvalidParamError('이메일과 비밀번호를 입력해주세요.');
@@ -35,8 +35,8 @@ const logIn = async (req: LogInRequest, res: Response, next: NextFunction): Prom
       message: null,
       result: {
         accessToken,
-        refreshToken
-      }
+        refreshToken,
+      },
     });
   } catch (error) {
     next(error);
