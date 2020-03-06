@@ -18,7 +18,7 @@ const getBookReviews = async (
 ): Promise<void> => {
   try {
     const {
-      params: { bookUniqueId }
+      params: { bookUniqueId },
     } = req;
 
     const book = await getRepository(Book).findOne({ uniqueId: bookUniqueId });
@@ -40,8 +40,8 @@ const getBookReviews = async (
       message: null,
       result: {
         reviews,
-        count
-      }
+        count,
+      },
     });
   } catch (error) {
     next(error);

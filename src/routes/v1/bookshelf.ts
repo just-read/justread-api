@@ -6,7 +6,7 @@ import {
   getBookshelves,
   modifyBookshelf,
   removeBook,
-  removeBookshelf
+  removeBookshelf,
 } from '../../controllers/bookshelfControllers';
 import { privateRoute } from '../../utils/auth';
 

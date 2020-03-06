@@ -13,7 +13,7 @@ interface RemoveBookReviewRequest extends Request {
 const removeBookReview = async (
   req: RemoveBookReviewRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {

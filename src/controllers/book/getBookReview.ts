@@ -2,8 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
 import Rating from '../../entities/rating';
-import { UnauthorizedError, NotFoundError } from '../../utils/customErrors';
 import User from '../../entities/user';
+import { UnauthorizedError, NotFoundError } from '../../utils/customErrors';
 
 interface GetBookReviewRequest extends Request {
   params: {

@@ -14,7 +14,7 @@ interface ModifyBookReviewRequest extends Request {
 const modifyBookReview = async (
   req: ModifyBookReviewRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {

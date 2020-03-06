@@ -18,7 +18,7 @@ const searchBooks = async (
   next: NextFunction
 ): Promise<void> => {
   const {
-    query: { q: searchTerm, page = 1, limit = 10 }
+    query: { q: searchTerm, page = 1, limit = 10 },
   } = req;
   if (searchTerm) {
     try {
@@ -31,7 +31,7 @@ const searchBooks = async (
       let initialBookItemsInfo: IBookList = {
         books: [],
         total: 0,
-        count: 0
+        count: 0,
       };
 
       if (isISBN(searchTerm)) {
@@ -50,7 +50,7 @@ const searchBooks = async (
           return {
             books,
             count,
-            total
+            total,
           };
         };
         const searchResult = await searchWithISBN();
@@ -73,7 +73,7 @@ const searchBooks = async (
           return {
             books,
             count,
-            total
+            total,
           };
         };
         const searchResult = await searchWithTerm();
@@ -89,9 +89,9 @@ const searchBooks = async (
             total: initialBookItemsInfo.total,
             current: page,
             limit,
-            count: initialBookItemsInfo.count
-          }
-        }
+            count: initialBookItemsInfo.count,
+          },
+        },
       });
     } catch (error) {
       next(error);

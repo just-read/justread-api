@@ -16,7 +16,7 @@ interface AddBookReviewRequest extends Request {
 const addBookReview = async (
   req: AddBookReviewRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {

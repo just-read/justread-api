@@ -13,7 +13,7 @@ interface RemoveBookshelfRequest extends Request {
 const removeBookshelf = async (
   req: RemoveBookshelfRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {

@@ -7,5 +7,5 @@ const database = new Database();
 database.getConnection();
 
 createApp().then(app =>
-  app.listen(PORT, () => console.log(`JustRead API is running: http://localhost:${PORT}`))
+  app.listen(PORT, () => console.log(`JustRead API is running: http://localhost:${PORT}`)),
 );

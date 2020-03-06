@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
+import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
 import { InvalidParamError } from '../../utils/customErrors';
-import { getRepository } from 'typeorm';
 import { IBookList } from './types';
 
 export enum EnumBookListType {
   recent = 'recent',
   popular = 'popular',
-  recommend = 'recomend'
+  recommend = 'recomend',
 }
 
 interface GetBookListRequest extends Request {
@@ -25,7 +25,7 @@ const getBooks = async (
 ): Promise<void> => {
   try {
     const {
-      query: { type = EnumBookListType.recent, page = 1, limit = 10 }
+      query: { type = EnumBookListType.recent, page = 1, limit = 10 },
     } = req;
 
     if (!(type in EnumBookListType)) {
@@ -47,14 +47,14 @@ const getBooks = async (
       return {
         books,
         count,
-        total
+        total,
       };
     };
 
     let initialBookItemsInfo: IBookList = {
       books: [],
       total: 0,
-      count: 0
+      count: 0,
     };
 
     // 모양이 영 마음에 안 드는데 더 깔끔한 방법이 생기면 수정하기로 하자
@@ -62,7 +62,7 @@ const getBooks = async (
       default:
         const recentInfo = await getRecentBookListInfo();
         initialBookItemsInfo = {
-          ...recentInfo
+          ...recentInfo,
         };
     }
 
@@ -75,9 +75,9 @@ const getBooks = async (
           total: initialBookItemsInfo.total,
           current: page,
           limit,
-          count: initialBookItemsInfo.count
-        }
-      }
+          count: initialBookItemsInfo.count,
+        },
+      },
     });
   } catch (error) {
     next(error);

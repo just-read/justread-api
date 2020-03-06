@@ -15,7 +15,7 @@ interface SetBookRatingRequest extends Request {
 const setBookRating = async (
   req: SetBookRatingRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {

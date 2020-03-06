@@ -2,7 +2,7 @@ import { Router } from 'express';
 import {
   addBookReview,
   removeBookReview,
-  modifyBookReview
+  modifyBookReview,
 } from '../../controllers/reviewControllers';
 import { privateRoute } from '../../utils/auth';
 

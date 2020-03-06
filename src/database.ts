@@ -3,7 +3,7 @@ import {
   ConnectionManager,
   ConnectionOptions,
   createConnection,
-  getConnectionManager
+  getConnectionManager,
 } from 'typeorm';
 
 class Database {
@@ -27,8 +27,8 @@ class Database {
       migrations: [__dirname + '/migrations/*{.ts,.js}'],
       cli: {
         entitiesDir: 'entities',
-        migrationsDir: 'migrations'
-      }
+        migrationsDir: 'migrations',
+      },
     };
     return createConnection(connectionOptions);
   }
