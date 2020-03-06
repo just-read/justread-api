@@ -10,7 +10,11 @@ interface RefreshTokensRequest extends Request {
   };
 }
 
-const refreshTokens = async (req: RefreshTokensRequest, res: Response, next: NextFunction) => {
+const refreshTokens = async (
+  req: RefreshTokensRequest,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
     const {
       body: { refreshToken: originalRefreshToken },

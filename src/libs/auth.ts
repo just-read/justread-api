@@ -1,4 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import passport from 'passport';
 import {
   StrategyOptions,
@@ -6,10 +7,9 @@ import {
   Strategy as JWTStrategy,
   VerifiedCallback,
 } from 'passport-jwt';
-import jwt, { SignOptions } from 'jsonwebtoken';
+import { getRepository } from 'typeorm';
 import User from '../entities/user';
 import { UnauthorizedError } from './customErrors';
-import { getRepository } from 'typeorm';
 
 export type TokenData = {
   exp: number;
@@ -52,11 +52,13 @@ const generateToken = async (user: User, options?: SignOptions): Promise<string>
   });
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const decodeToken = async <T = any>(token: string): Promise<T> =>
   new Promise((resolve, reject) => {
     if (!TOKEN_SECRET_KEY) return;
     jwt.verify(token, TOKEN_SECRET_KEY, (error, decoded) => {
       if (error) reject(error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       resolve(decoded as any);
     });
   });
