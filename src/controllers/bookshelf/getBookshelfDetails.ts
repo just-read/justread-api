@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Bookshelf from '../../entities/bookshelf';
 import User from '../../entities/user';
-import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
+import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/customErrors';
 
 interface GetBookshelfDetailsRequest extends Request {
   params: {
@@ -13,7 +13,7 @@ interface GetBookshelfDetailsRequest extends Request {
 const getBookshelfDetails = async (
   req: GetBookshelfDetailsRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {

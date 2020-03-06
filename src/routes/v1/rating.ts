@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { setBookRating, removeBookRating } from '../../controllers/ratingControllers';
-import { privateRoute } from '../../utils/auth';
+import { privateRoute } from '../../libs/auth';
 
 const ratingRouter = Router();
 

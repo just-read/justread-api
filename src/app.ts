@@ -4,8 +4,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import passport from 'passport';
 import globalRouter from './routes/global';
-import { globalErrorHandler } from './utils/middlewares/globalErrorHandler';
-import { passportAuthenticate } from './utils/auth';
+import { globalErrorHandler } from './libs/middlewares/globalErrorHandler';
+import { passportAuthenticate } from './libs/auth';
 
 const createApp = async (): Promise<express.Application> => {
   const app = express();

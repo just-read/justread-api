@@ -8,7 +8,7 @@ const globalErrorHandler = (error: Error, req: Request, res: Response, _: NextFu
     res.status(500);
   }
   res.json({
-    success: false,
+    success: false,w
     message: error.message,
     result: null,
   });

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import User from '../../entities/user';
-import { AlreadyExistsError, InvalidParamError } from '../../utils/middlewares/customErrors';
+import { AlreadyExistsError, InvalidParamError } from '../../libs/middlewares/customErrors';
 
 interface SignUpRequest extends Request {
   body: {
@@ -9,6 +9,7 @@ interface SignUpRequest extends Request {
     nickName: string;
   };
 }
+w;
 
 const signUp = async (req: SignUpRequest, res: Response, next: NextFunction): Promise<void> => {
   try {

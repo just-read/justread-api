@@ -4,7 +4,7 @@ import {
   InvalidParamError,
   IncorrectLoginRequestError,
   NotFoundError,
-} from '../../utils/middlewares/customErrors';
+} from '../../libs/middlewares/customErrors';
 
 interface LogInRequest extends Request {
   body: {

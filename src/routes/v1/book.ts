@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { privateRoute } from '../../utils/auth';
+import { privateRoute } from '../../libs/auth';
 import {
   addNewBook,
   getBookDetails,
@@ -7,7 +7,7 @@ import {
   getBookReviews,
   getBooks,
   modifyBook,
-  searchBooks
+  searchBooks,
 } from '../../controllers/bookControllers';
 
 const bookRouter = Router();

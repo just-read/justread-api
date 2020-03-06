@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Bookshelf from '../../entities/bookshelf';
 import User from '../../entities/user';
-import { UnauthorizedError, InvalidParamError } from '../../utils/customErrors';
+import { UnauthorizedError, InvalidParamError } from '../../libs/customErrors';
 
 interface CreateNewBookshelfRequest extends Request {
   body: { name: string };
@@ -10,7 +10,7 @@ interface CreateNewBookshelfRequest extends Request {
 const createNewBookshelf = async (
   req: CreateNewBookshelfRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {

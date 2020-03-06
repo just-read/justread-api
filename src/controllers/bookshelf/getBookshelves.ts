@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
-import { UnauthorizedError } from '../../utils/customErrors';
+import { UnauthorizedError } from '../../libs/customErrors';
 import Bookshelf from '../../entities/bookshelf';
 import User from '../../entities/user';
 
@@ -14,7 +14,7 @@ interface GetBookshelvesRequest extends Request {
 const getBookshelves = async (
   req: GetBookshelvesRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {

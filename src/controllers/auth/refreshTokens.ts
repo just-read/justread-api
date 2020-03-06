@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import User from '../../entities/user';
-import { decodeToken, RefreshTokenData } from '../../utils/auth';
-import { UnauthorizedError } from '../../utils/middlewares/customErrors';
+import { decodeToken, RefreshTokenData } from '../../libs/auth';
+import { UnauthorizedError } from '../../libs/middlewares/customErrors';
 
 interface RefreshTokensRequest extends Request {
   body: {

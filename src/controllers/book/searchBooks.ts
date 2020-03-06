@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
-import { isISBN } from '../../utils/validation';
+import { isISBN } from '../../libs/validation';
 import { IBookList } from './types';
 
 interface SearchBooksRequest extends Request {
@@ -15,7 +15,7 @@ interface SearchBooksRequest extends Request {
 const searchBooks = async (
   req: SearchBooksRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   const {
     query: { q: searchTerm, page = 1, limit = 10 },

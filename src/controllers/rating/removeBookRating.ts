@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Rating from '../../entities/rating';
 import User from '../../entities/user';
-import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
+import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/customErrors';
 
 interface RemoveBookRatingRequest extends Request {
   body: {

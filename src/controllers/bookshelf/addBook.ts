@@ -3,7 +3,7 @@ import { getRepository, getConnection } from 'typeorm';
 import Book from '../../entities/book';
 import Bookshelf from '../../entities/bookshelf';
 import User from '../../entities/user';
-import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
+import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/customErrors';
 
 interface AddBookRequest extends Request {
   params: {

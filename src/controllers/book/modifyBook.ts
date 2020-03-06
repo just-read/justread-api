@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
-import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/customErrors';
+import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/customErrors';
 
 interface ModifyBookRequest extends Request {
   body: {
@@ -17,7 +17,7 @@ interface ModifyBookRequest extends Request {
 const modifyBook = async (
   req: ModifyBookRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {
@@ -46,7 +46,7 @@ const modifyBook = async (
         description,
         year,
         authors,
-      }
+      },
     );
     res.status(200).json({
       success: true,

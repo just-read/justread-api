@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
-import { InvalidParamError } from '../../utils/customErrors';
+import { InvalidParamError } from '../../libs/customErrors';
 import { IBookList } from './types';
 
 export enum EnumBookListType {
@@ -21,7 +21,7 @@ interface GetBookListRequest extends Request {
 const getBooks = async (
   req: GetBookListRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     const {

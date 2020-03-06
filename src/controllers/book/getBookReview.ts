@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
 import Rating from '../../entities/rating';
 import User from '../../entities/user';
-import { UnauthorizedError, NotFoundError } from '../../utils/customErrors';
+import { UnauthorizedError, NotFoundError } from '../../libs/customErrors';
 
 interface GetBookReviewRequest extends Request {
   params: {
@@ -15,7 +15,7 @@ interface GetBookReviewRequest extends Request {
 const getBookReview = async (
   req: GetBookReviewRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {

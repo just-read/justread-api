@@ -7,11 +7,11 @@ import {
   BeforeInsert,
   BeforeUpdate,
   UpdateDateColumn,
-  OneToMany
+  OneToMany,
 } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { IsEmail } from 'class-validator';
-import { generateToken } from '../utils/auth';
+import { generateToken } from '../libs/auth';
 import Rating from './rating';
 import Review from './review';
 import Bookshelf from './bookshelf';
@@ -52,19 +52,19 @@ class User extends BaseEntity {
 
   @OneToMany(
     type => Rating,
-    rating => rating.user
+    rating => rating.user,
   )
   ratings!: Rating[];
 
   @OneToMany(
     type => Review,
-    review => review.user
+    review => review.user,
   )
   reviews!: Review[];
 
   @OneToMany(
     type => Bookshelf,
-    bookshelf => bookshelf.user
+    bookshelf => bookshelf.user,
   )
   bookshelves!: Bookshelf[];
 
@@ -93,7 +93,7 @@ class User extends BaseEntity {
 
   async refreshUserTokens(
     originalRefreshToken: string,
-    refreshTokenExp: number
+    refreshTokenExp: number,
   ): Promise<GenerateTokensResult> {
     const now = new Date().getTime();
     const diff = refreshTokenExp * 1000 - now;
@@ -102,12 +102,12 @@ class User extends BaseEntity {
     if (diff < 1000 * 60 * 60 * 24 * 3) {
       refreshToken = await generateToken(this, {
         subject: 'refresh_token',
-        expiresIn: '30d'
+        expiresIn: '30d',
       });
     }
     const accessToken = await generateToken(this, {
       subject: 'access_token',
-      expiresIn: '1h'
+      expiresIn: '1h',
     });
 
     return { refreshToken, accessToken };

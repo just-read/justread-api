@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Book from '../../entities/book';
-import { InvalidParamError, UnauthorizedError } from '../../utils/customErrors';
-import { isISBN } from '../../utils/validation';
+import { InvalidParamError, UnauthorizedError } from '../../libs/customErrors';
+import { isISBN } from '../../libs/validation';
 
 interface AddNewBookRequest extends Request {
   body: {
@@ -16,7 +16,7 @@ interface AddNewBookRequest extends Request {
 const addNewBook = async (
   req: AddNewBookRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {

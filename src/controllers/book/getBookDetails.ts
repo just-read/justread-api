@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
-import { NotFoundError } from '../../utils/customErrors';
+import { NotFoundError } from '../../libs/customErrors';
 
 interface GetBookDetailsRequest extends Request {
   params: {
@@ -12,7 +12,7 @@ interface GetBookDetailsRequest extends Request {
 const getBookDetails = async (
   req: GetBookDetailsRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     const {
