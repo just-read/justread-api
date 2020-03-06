@@ -11,9 +11,9 @@ interface RemoveBookRequest extends Request {
 }
 
 const removeBook = async (
-  req: RemoveBookRequest,s
+  req: RemoveBookRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> => {
   try {
     if (!req.user) {
