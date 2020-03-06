@@ -9,7 +9,6 @@ interface SignUpRequest extends Request {
     nickName: string;
   };
 }
-w;
 
 const signUp = async (req: SignUpRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
