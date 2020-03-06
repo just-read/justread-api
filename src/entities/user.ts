@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Entity,
   BaseEntity,
@@ -39,10 +40,13 @@ class User extends BaseEntity {
   nickName!: string;
 
   @Column({ type: 'varchar', length: 200, nullable: true })
-  avatar?: string | null;
+  avatar!: string | null;
 
   @Column({ type: 'varchar', length: 200, nullable: true })
-  shortBio?: string | null;
+  shortBio!: string | null;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  googleId!: string | null;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;

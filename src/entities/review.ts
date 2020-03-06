@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   BaseEntity,
   Column,
@@ -6,7 +7,7 @@ import {
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from 'typeorm';
 import Book from './book';
 import User from './user';
@@ -37,19 +38,19 @@ class Review extends BaseEntity {
 
   @ManyToOne(
     type => User,
-    user => user.ratings
+    user => user.ratings,
   )
   user!: User;
 
   @ManyToOne(
     type => Book,
-    book => book.ratings
+    book => book.ratings,
   )
   book!: Book;
 
   @OneToOne(
     type => Rating,
-    rating => rating.review
+    rating => rating.review,
   )
   rating!: Rating;
 }

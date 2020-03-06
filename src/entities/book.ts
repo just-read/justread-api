@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Entity,
   BaseEntity,
@@ -7,7 +8,7 @@ import {
   BeforeInsert,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany
+  OneToMany,
 } from 'typeorm';
 import shortid from 'shortid';
 import Rating from './rating';
@@ -46,13 +47,13 @@ class Book extends BaseEntity {
 
   @OneToMany(
     type => Rating,
-    rating => rating.book
+    rating => rating.book,
   )
   ratings!: Rating[];
 
   @OneToMany(
     type => Review,
-    review => review.book
+    review => review.book,
   )
   reviews!: Review[];
 
