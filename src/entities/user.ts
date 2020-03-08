@@ -34,7 +34,8 @@ class User extends BaseEntity {
   @IsEmail()
   email!: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: false })
+  // 소셜 로그인시 비밀번호가 따로 필요하지 않음
+  @Column({ type: 'varchar', length: 100, nullable: true })
   password!: string;
 
   @Column({ type: 'varchar', length: 30 })
@@ -47,7 +48,7 @@ class User extends BaseEntity {
   shortBio!: string | null;
 
   @Index('idx_google_id', { unique: true })
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true, unique: true })
   googleId!: string | null;
 
   @CreateDateColumn({ type: 'timestamptz' })

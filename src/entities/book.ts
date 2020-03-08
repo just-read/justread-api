@@ -20,7 +20,7 @@ class Book extends BaseEntity {
   id!: number;
 
   @Index('idx_unique_id', { unique: true })
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 20, unique: true })
   uniqueId!: string;
 
   @Column({ type: 'varchar', length: 200 })
