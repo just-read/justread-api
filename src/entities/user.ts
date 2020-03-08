@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  Index,
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
@@ -45,6 +46,7 @@ class User extends BaseEntity {
   @Column({ type: 'varchar', length: 200, nullable: true })
   shortBio!: string | null;
 
+  @Index('idx_google_id', { unique: true })
   @Column({ type: 'varchar', length: 100, nullable: true })
   googleId!: string | null;
 

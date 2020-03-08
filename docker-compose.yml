@@ -38,3 +38,5 @@ services:
       - DB_ENDPOINT=db
       - DB_USERNAME=justread
       - DB_PASSWORD=justread-db
+    env_file:
+      - .env
