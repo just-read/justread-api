@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
+import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../libs/constants';
 import { isISBN } from '../../libs/validation';
 import { IBookList } from './types';
 
@@ -18,7 +19,7 @@ const searchBooks = async (
   next: NextFunction,
 ): Promise<void> => {
   const {
-    query: { q: searchTerm, page = 1, limit = 10 },
+    query: { q: searchTerm, page = DEFAULT_PAGE, limit = DEFAULT_LIMIT },
   } = req;
   if (searchTerm) {
     try {

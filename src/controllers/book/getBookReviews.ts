@@ -27,6 +27,7 @@ const getBookReviews = async (
       throw new NotFoundError();
     }
 
+    // 페이지네이션 구현 필요
     const [reviews, count] = await getRepository(Rating)
       .createQueryBuilder('rating')
       .innerJoinAndSelect('rating.review', 'review')

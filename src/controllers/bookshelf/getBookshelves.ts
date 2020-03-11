@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
+import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../libs/constants';
 import { UnauthorizedError } from '../../libs/customErrors';
 import Bookshelf from '../../entities/bookshelf';
 import User from '../../entities/user';
@@ -23,7 +24,7 @@ const getBookshelves = async (
 
     const { id: userId } = req.user as User;
     const {
-      query: { page = 1, limit = 10 },
+      query: { page = DEFAULT_PAGE, limit = DEFAULT_LIMIT },
     } = req;
 
     const offset = (page - 1) * limit;
