@@ -1,9 +1,12 @@
 # API List
 
-- [사용자](#사용자)
+- [인증](#인증)
   - [✅ 회원 가입](#회원-가입)
   - [✅ 로그인](#로그인)
+  - [✅ 구글 로그인](#구글-로그인)
   - [✅ 토큰 갱신](#토큰-갱신)
+- [사용자](#사용자)
+  - [프로필 상세](#프로필-상세)
 - [책](#책)
   - [✅ 책 목록](#책-목록)
   - [✅ 책 검색](#책-검색)
@@ -41,7 +44,7 @@
 
   성공시 `HTTP Status Code`는 200대로 응답
 
-  ```json
+  ```jsonc
   {
     "success": true,
     "message": null,
@@ -55,7 +58,7 @@
 
   실패시 `HTTP Status Code`는 실패 사유에 따라 부여
 
-  ```json
+  ```jsonc
   {
     "success": false,
     "message": "에러 메세지",
@@ -63,14 +66,14 @@
   }
   ```
 
-## 사용자
+## 인증
 
 ### 회원 가입
 
 #### 요청
 
 ```
-POST {{API_URL}}/v1/users/signup
+POST {{API_URL}}/v1/auth/signup
 ```
 
 | 파라미터   | 파라미터 유형 | 데이터 타입 | 필수 여부 | 설명     |
@@ -86,7 +89,7 @@ POST {{API_URL}}/v1/users/signup
 | `accessToken`  | `string`    | 인증 토큰     |
 | `refreshToken` | `string`    | 리프레시 토큰 |
 
-```json
+```jsonc
 {
   "accessToken": "ACCESS TOKEN STRING HERE",
   "refreshToken": "REFRESH TOKEN STRING HERE"
@@ -98,7 +101,7 @@ POST {{API_URL}}/v1/users/signup
 #### 요청
 
 ```
-POST {{API_URL}}/v1/users/login
+POST {{API_URL}}/v1/auth/login
 ```
 
 | 파라미터   | 파라미터 유형 | 데이터 타입 | 필수 여부 | 설명     |
@@ -113,7 +116,36 @@ POST {{API_URL}}/v1/users/login
 | `accessToken`  | `string`    | 인증 토큰     |
 | `refreshToken` | `string`    | 리프레시 토큰 |
 
-```json
+```jsonc
+{
+  "accessToken": "ACCESS TOKEN HERE",
+  "refreshToken": "REFRESH TOKEN HERE"
+}
+```
+
+### 구글 로그인
+
+#### 요청
+
+```
+POST {{API_URL}}/v1/auth/google
+```
+
+| 파라미터   | 파라미터 유형 | 데이터 타입 | 필수 여부 | 설명      |
+| ---------- | ------------- | ----------- | --------- | --------- |
+| `email`    | `body`        | `string`    | ✅        | 이메일    |
+| `nickName` | `body`        | `string`    | ✅        | 이름      |
+| `googleId` | `body`        | `string`    | ✅        | 구글 ID   |
+| `tokenId`  | `body`        | `string`    | ✅        | 구글 토큰 |
+
+#### 응답
+
+| 키             | 데이터 타입 | 설명          |
+| -------------- | ----------- | ------------- |
+| `accessToken`  | `string`    | 인증 토큰     |
+| `refreshToken` | `string`    | 리프레시 토큰 |
+
+```jsonc
 {
   "accessToken": "ACCESS TOKEN HERE",
   "refreshToken": "REFRESH TOKEN HERE"
@@ -125,7 +157,7 @@ POST {{API_URL}}/v1/users/login
 #### 요청
 
 ```
-POST {{API_URL}}/v1/users/tokens
+POST {{API_URL}}/v1/auth/tokens
 ```
 
 | 파라미터       | 파라미터 유형 | 데이터 타입 | 필수 여부 | 설명          |
@@ -139,12 +171,14 @@ POST {{API_URL}}/v1/users/tokens
 | `accessToken`  | `string`    | 인증 토큰     |
 | `refreshToken` | `string`    | 리프레시 토큰 |
 
-```JSON
+```jsonc
 {
   "accessToken": "ACCESS TOKEN HERE",
   "refreshToken": "REFRESH TOKEN HERE"
 }
 ```
+
+## 사용자
 
 ### 프로필 상세
 
@@ -193,7 +227,7 @@ GET {{API_URL}}/v1/books?type={type}
 | `bookItems` | `Book[]`    | 책 목록     |
 | `pageInfo`  | `PageInfo`  | 페이지 정보 |
 
-```JSON
+```jsonc
 {
   "bookItems": [
     {
@@ -207,7 +241,7 @@ GET {{API_URL}}/v1/books?type={type}
       "title": "TITLE",
       "description": "DESCRIPTION",
       "year": 2020
-    },
+    }
     // more books...
   ],
   "pageInfo": {
@@ -240,7 +274,7 @@ GET {{API_URL}}/v1/books?p={search_term}
 | `bookItems` | `Book[]`    | 책 목록     |
 | `pageInfo`  | `PageInfo`  | 페이지 정보 |
 
-```JSON
+```jsonc
 {
   "bookItems": [
     {
@@ -254,7 +288,7 @@ GET {{API_URL}}/v1/books?p={search_term}
       "title": "TITLE",
       "description": "DESCRIPTION",
       "year": 2020
-    },
+    }
     // more books...
   ],
   "pageInfo": {
