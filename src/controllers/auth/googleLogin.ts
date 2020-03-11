@@ -1,12 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import User from '../../entities/user';
+import { UnauthorizedError } from '../../libs/customErrors';
+import { verifyGoogleToken } from '../../libs/validation';
 
 interface GoogleLogInRequest extends Request {
   body: {
     email: string;
     nickName: string;
     googleId: string;
+    tokenId: string;
   };
 }
 
@@ -17,8 +20,18 @@ const googleLogIn = async (
 ): Promise<void> => {
   try {
     const {
-      body: { email, nickName, googleId },
+      body: { email, nickName, googleId, tokenId },
     } = req;
+
+    const isValid = await verifyGoogleToken({
+      originEmail: email,
+      originGoogleId: googleId,
+      tokenId,
+    });
+
+    if (!isValid) {
+      throw new UnauthorizedError('잘못된 인증 정보입니다.');
+    }
 
     let user = await getRepository(User).findOne({ googleId });
 
