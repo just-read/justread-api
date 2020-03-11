@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
 import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../libs/constants';
 import { isISBN } from '../../libs/validation';
-import { IBookList } from './types';
+import { BookList } from '../../types';
 
 interface SearchBooksRequest extends Request {
   query: {
@@ -29,14 +29,14 @@ const searchBooks = async (
        * 책 숫자가 많아지면 성능 저하가 있을 것으로 예상됨
        * 일단 구현이 목표니 이대로 하고 나중에 개선하는 걸로
        */
-      let initialBookItemsInfo: IBookList = {
+      let initialBookItemsInfo: BookList = {
         books: [],
         total: 0,
         count: 0,
       };
 
       if (isISBN(searchTerm)) {
-        const searchWithISBN = async (): Promise<IBookList> => {
+        const searchWithISBN = async (): Promise<BookList> => {
           const total = await getRepository(Book)
             .createQueryBuilder('book')
             .where('book.isbn = :searchTerm', { searchTerm })
@@ -57,7 +57,7 @@ const searchBooks = async (
         const searchResult = await searchWithISBN();
         initialBookItemsInfo = { ...searchResult };
       } else {
-        const searchWithTerm = async (): Promise<IBookList> => {
+        const searchWithTerm = async (): Promise<BookList> => {
           const total = await getRepository(Book)
             .createQueryBuilder('book')
             .where('book.title LIKE :term', { term: `%${searchTerm}%` })

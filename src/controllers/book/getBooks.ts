@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
 import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../libs/constants';
 import { InvalidParamError } from '../../libs/customErrors';
-import { IBookList } from './types';
+import { BookList } from '../../types';
 
 export enum EnumBookListType {
   recent = 'recent',
@@ -35,7 +35,7 @@ const getBooks = async (
 
     const offset = (page - 1) * limit;
 
-    const getRecentBookListInfo = async (): Promise<IBookList> => {
+    const getRecentBookListInfo = async (): Promise<BookList> => {
       const total = await getRepository(Book)
         .createQueryBuilder('book')
         .getCount();
@@ -52,7 +52,7 @@ const getBooks = async (
       };
     };
 
-    let initialBookItemsInfo: IBookList = {
+    let initialBookItemsInfo: BookList = {
       books: [],
       total: 0,
       count: 0,
@@ -60,11 +60,16 @@ const getBooks = async (
 
     // 모양이 영 마음에 안 드는데 더 깔끔한 방법이 생기면 수정하기로 하자
     switch (type) {
-      default:
+      case 'popular': {
+        break;
+      }
+      default: {
         const recentInfo = await getRecentBookListInfo();
         initialBookItemsInfo = {
           ...recentInfo,
         };
+        break;
+      }
     }
 
     res.status(200).json({
