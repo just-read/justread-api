@@ -28,7 +28,7 @@ const setBookRating = async (
     } = req;
 
     if (!bookUniqueId || !rating) {
-      throw new InvalidParamError('필요한 정보가 존재하지 않습니다.');
+      throw new InvalidParamError();
     }
 
     const book = await getRepository(Book).findOne({ uniqueId: bookUniqueId });

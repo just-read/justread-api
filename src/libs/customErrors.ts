@@ -26,7 +26,7 @@ class NotFoundError extends CustomError {
 }
 
 class InvalidParamError extends CustomError {
-  constructor(message: string, status = 400) {
+  constructor(message = '필요한 정보가 존재하지 않습니다.', status = 400) {
     super(message, status);
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, InvalidParamError);

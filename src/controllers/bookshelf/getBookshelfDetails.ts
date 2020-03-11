@@ -26,7 +26,7 @@ const getBookshelfDetails = async (
     } = req;
 
     if (!bookshelfId) {
-      throw new InvalidParamError('필요한 정보가 존재하지 않습니다.');
+      throw new InvalidParamError();
     }
 
     const parsedBookshelfId = parseInt(bookshelfId, 10);

@@ -26,7 +26,7 @@ const removeRating = async (
     } = req;
 
     if (!ratingId) {
-      throw new InvalidParamError('필요한 정보가 존재하지 않습니다.');
+      throw new InvalidParamError();
     }
 
     const rating = await getRepository(Rating).findOne({ id: ratingId, userId });
