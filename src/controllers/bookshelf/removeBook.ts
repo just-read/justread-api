@@ -7,7 +7,7 @@ import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/
 
 interface RemoveBookRequest extends Request {
   params: { bookshelfId: string };
-  body: { bookUniqueId: string };
+  body: { bookId: string };
 }
 
 const removeBook = async (
@@ -23,10 +23,10 @@ const removeBook = async (
     const { id: userId } = req.user as User;
     const {
       params: { bookshelfId },
-      body: { bookUniqueId },
+      body: { bookId },
     } = req;
 
-    if (!bookshelfId || !bookUniqueId) {
+    if (!bookshelfId || !bookId) {
       throw new InvalidParamError();
     }
 
@@ -37,14 +37,14 @@ const removeBook = async (
       .innerJoinAndSelect('bookshelf.books', 'book')
       .where('bookshelf.id = :bookshelfId', { bookshelfId: parsedBookshelfId })
       .andWhere('bookshelf.userId = :userId', { userId })
-      .andWhere('book.uniqueId = :bookUniqueId', { bookUniqueId })
+      .andWhere('book.id = :bookId', { bookId })
       .getOne();
 
     if (!bookshelf) {
       throw new NotFoundError();
     }
 
-    const book = await getRepository(Book).findOne({ uniqueId: bookUniqueId });
+    const book = await getRepository(Book).findOne(bookId);
 
     if (!book) {
       throw new NotFoundError();

@@ -7,7 +7,7 @@ import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/
 
 interface SetBookRatingRequest extends Request {
   body: {
-    bookUniqueId: string;
+    bookId: string;
     rating: number;
   };
 }
@@ -24,14 +24,14 @@ const setBookRating = async (
 
     const { id: userId } = req.user as User;
     const {
-      body: { bookUniqueId, rating },
+      body: { bookId, rating },
     } = req;
 
-    if (!bookUniqueId || !rating) {
+    if (!bookId || !rating) {
       throw new InvalidParamError();
     }
 
-    const book = await getRepository(Book).findOne({ uniqueId: bookUniqueId });
+    const book = await getRepository(Book).findOne(bookId);
 
     if (!book) {
       throw new NotFoundError('책 정보가 존재하지 않습니다.');

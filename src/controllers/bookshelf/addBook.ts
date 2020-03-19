@@ -10,7 +10,7 @@ interface AddBookRequest extends Request {
     bookshelfId: string;
   };
   body: {
-    bookUniqueId: string;
+    bookId: string;
   };
 }
 
@@ -23,17 +23,17 @@ const addBook = async (req: AddBookRequest, res: Response, next: NextFunction): 
     const { id: userId } = req.user as User;
     const {
       params: { bookshelfId },
-      body: { bookUniqueId },
+      body: { bookId },
     } = req;
 
-    if (!bookshelfId || !bookUniqueId) {
+    if (!bookshelfId || !bookId) {
       throw new InvalidParamError('필요한 정보가 누락되었습니다.');
     }
 
     const parsedBookshelfId = parseInt(bookshelfId, 10);
 
     const bookshelf = await getRepository(Bookshelf).findOne({ id: parsedBookshelfId, userId });
-    const book = await getRepository(Book).findOne({ uniqueId: bookUniqueId });
+    const book = await getRepository(Book).findOne(bookId);
 
     if (!bookshelf || !book) {
       throw new NotFoundError();

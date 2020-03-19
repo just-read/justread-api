@@ -27,7 +27,7 @@ interface GenerateTokensResult {
 
 @Entity()
 class User extends BaseEntity {
-  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
+  @PrimaryGeneratedColumn('uuid')
   id!: number;
 
   @Column({ type: 'varchar', length: 50, unique: true })

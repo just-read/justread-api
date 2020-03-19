@@ -15,7 +15,7 @@ import Book from './book';
 
 @Entity()
 class Bookshelf extends BaseEntity {
-  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
+  @PrimaryGeneratedColumn('uuid')
   id!: number;
 
   @Column({ type: 'bigint', unsigned: true })

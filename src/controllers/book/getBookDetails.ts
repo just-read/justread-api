@@ -5,7 +5,7 @@ import { NotFoundError } from '../../libs/customErrors';
 
 interface GetBookDetailsRequest extends Request {
   params: {
-    bookUniqueId: string;
+    bookId: string;
   };
 }
 
@@ -16,12 +16,10 @@ const getBookDetails = async (
 ): Promise<void> => {
   try {
     const {
-      params: { bookUniqueId },
+      params: { bookId },
     } = req;
 
-    const bookInfo = await getRepository(Book).findOne({
-      uniqueId: bookUniqueId,
-    });
+    const bookInfo = await getRepository(Book).findOne(bookId);
 
     if (!bookInfo) {
       throw new NotFoundError();

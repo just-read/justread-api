@@ -7,7 +7,7 @@ import { UnauthorizedError, NotFoundError } from '../../libs/customErrors';
 
 interface GetBookReviewRequest extends Request {
   params: {
-    bookUniqueId: string;
+    bookId: string;
   };
 }
 
@@ -24,10 +24,10 @@ const getBookReview = async (
 
     const user = req.user as User;
     const {
-      params: { bookUniqueId },
+      params: { bookId },
     } = req;
 
-    const book = await getRepository(Book).findOne({ uniqueId: bookUniqueId });
+    const book = await getRepository(Book).findOne(bookId);
 
     if (!book) {
       throw new NotFoundError();

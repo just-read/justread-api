@@ -5,23 +5,17 @@ import {
   PrimaryGeneratedColumn,
   Column,
   Index,
-  BeforeInsert,
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import shortid from 'shortid';
 import Rating from './rating';
 import Review from './review';
 
 @Entity()
 class Book extends BaseEntity {
-  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
+  @PrimaryGeneratedColumn('uuid')
   id!: number;
-
-  @Index('idx_unique_id', { unique: true })
-  @Column({ type: 'varchar', length: 20, unique: true })
-  uniqueId!: string;
 
   @Column({ type: 'varchar', length: 200 })
   title!: string;
@@ -56,11 +50,6 @@ class Book extends BaseEntity {
     review => review.book,
   )
   reviews!: Review[];
-
-  @BeforeInsert()
-  async generateUniqueId(): Promise<void> {
-    this.uniqueId = shortid.generate();
-  }
 }
 
 export default Book;
