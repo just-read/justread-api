@@ -15,7 +15,7 @@ import Rating from './rating';
 
 @Entity()
 class Review extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: number;
 
   @Column({ type: 'bigint', unsigned: true })

@@ -21,7 +21,9 @@ const getBookReviews = async (
       params: { bookId },
     } = req;
 
-    const book = await getRepository(Book).findOne(bookId);
+    const parsedBookId = parseInt(bookId, 10);
+
+    const book = await getRepository(Book).findOne(parsedBookId);
 
     if (!book) {
       throw new NotFoundError();

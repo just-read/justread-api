@@ -14,7 +14,7 @@ import Review from './review';
 
 @Entity()
 class Book extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: number;
 
   @Column({ type: 'varchar', length: 200 })
