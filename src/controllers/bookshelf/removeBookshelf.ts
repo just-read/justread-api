@@ -5,7 +5,7 @@ import User from '../../entities/user';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/customErrors';
 
 interface RemoveBookshelfRequest extends Request {
-  body: {
+  params: {
     bookshelfId: string;
   };
 }
@@ -22,7 +22,7 @@ const removeBookshelf = async (
 
     const { id: userId } = req.user as User;
     const {
-      body: { bookshelfId },
+      params: { bookshelfId },
     } = req;
 
     if (!bookshelfId) {

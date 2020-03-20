@@ -14,11 +14,12 @@ const bookshelfRouter = Router();
 
 bookshelfRouter.post('', privateRoute, createNewBookshelf);
 bookshelfRouter.get('', privateRoute, getBookshelves);
-bookshelfRouter.delete('', privateRoute, removeBookshelf);
 
 bookshelfRouter.post('/:bookshelfId', privateRoute, addBook);
 bookshelfRouter.get('/:bookshelfId', privateRoute, getBookshelfDetails);
 bookshelfRouter.put('/:bookshelfId', privateRoute, modifyBookshelf);
-bookshelfRouter.delete('/:bookshelfId', privateRoute, removeBook);
+bookshelfRouter.delete('/:bookshelfId', privateRoute, removeBookshelf);
+
+bookshelfRouter.delete('/:bookshelfId/books/:bookId', privateRoute, removeBook);
 
 export default bookshelfRouter;

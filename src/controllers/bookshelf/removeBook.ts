@@ -6,8 +6,10 @@ import User from '../../entities/user';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/customErrors';
 
 interface RemoveBookRequest extends Request {
-  params: { bookshelfId: string };
-  body: { bookId: string };
+  params: {
+    bookshelfId: string;
+    bookId: string;
+  };
 }
 
 const removeBook = async (
@@ -22,8 +24,7 @@ const removeBook = async (
 
     const { id: userId } = req.user as User;
     const {
-      params: { bookshelfId },
-      body: { bookId },
+      params: { bookshelfId, bookId },
     } = req;
 
     if (!bookshelfId || !bookId) {
@@ -31,20 +32,21 @@ const removeBook = async (
     }
 
     const parsedBookshelfId = parseInt(bookshelfId, 10);
+    const parsedBookId = parseInt(bookId, 10);
 
     const bookshelf = await getRepository(Bookshelf)
       .createQueryBuilder('bookshelf')
       .innerJoinAndSelect('bookshelf.books', 'book')
       .where('bookshelf.id = :bookshelfId', { bookshelfId: parsedBookshelfId })
       .andWhere('bookshelf.userId = :userId', { userId })
-      .andWhere('book.id = :bookId', { bookId })
+      .andWhere('book.id = :bookId', { bookId: parsedBookId })
       .getOne();
 
     if (!bookshelf) {
       throw new NotFoundError();
     }
 
-    const book = await getRepository(Book).findOne(bookId);
+    const book = await getRepository(Book).findOne(parsedBookId);
 
     if (!book) {
       throw new NotFoundError();
