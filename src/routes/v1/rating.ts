@@ -5,6 +5,7 @@ import { privateRoute } from '../../libs/auth';
 const ratingRouter = Router();
 
 ratingRouter.post('', privateRoute, setBookRating);
-ratingRouter.delete('', privateRoute, removeBookRating);
+
+ratingRouter.delete('/:ratingId', privateRoute, removeBookRating);
 
 export default ratingRouter;

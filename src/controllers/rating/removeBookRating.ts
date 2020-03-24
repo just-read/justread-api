@@ -5,8 +5,8 @@ import User from '../../entities/user';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/customErrors';
 
 interface RemoveBookRatingRequest extends Request {
-  body: {
-    ratingId: number;
+  params: {
+    ratingId: string;
   };
 }
 
@@ -22,14 +22,16 @@ const removeRating = async (
 
     const { id: userId } = req.user as User;
     const {
-      body: { ratingId },
+      params: { ratingId },
     } = req;
 
     if (!ratingId) {
       throw new InvalidParamError();
     }
 
-    const rating = await getRepository(Rating).findOne({ id: ratingId, userId });
+    const parsedRatingId = parseInt(ratingId, 10);
+
+    const rating = await getRepository(Rating).findOne({ id: parsedRatingId, userId });
 
     if (!rating) {
       throw new NotFoundError('별점 정보가 존재하지 않습니다.');
