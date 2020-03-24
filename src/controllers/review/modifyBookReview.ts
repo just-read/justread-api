@@ -5,8 +5,10 @@ import User from '../../entities/user';
 import { UnauthorizedError, NotFoundError } from '../../libs/customErrors';
 
 interface ModifyBookReviewRequest extends Request {
+  params: {
+    reviewId: string;
+  };
   body: {
-    reviewId: number;
     reviewContent: string;
   };
 }
@@ -23,16 +25,19 @@ const modifyBookReview = async (
 
     const { id: userId } = req.user as User;
     const {
-      body: { reviewId, reviewContent },
+      params: { reviewId },
+      body: { reviewContent },
     } = req;
 
-    const review = await getRepository(Review).findOne({ id: reviewId, userId });
+    const parsedReviewId = parseInt(reviewId, 10);
+
+    const review = await getRepository(Review).findOne({ id: parsedReviewId, userId });
 
     if (!review) {
       throw new NotFoundError();
     }
 
-    await getRepository(Review).update({ id: reviewId }, { content: reviewContent });
+    await getRepository(Review).update({ id: parsedReviewId }, { content: reviewContent });
 
     res.status(200).json({
       success: true,

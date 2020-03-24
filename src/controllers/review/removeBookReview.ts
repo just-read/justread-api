@@ -5,8 +5,8 @@ import User from '../../entities/user';
 import { UnauthorizedError, NotFoundError } from '../../libs/customErrors';
 
 interface RemoveBookReviewRequest extends Request {
-  body: {
-    reviewId: number;
+  params: {
+    reviewId: string;
   };
 }
 
@@ -22,11 +22,13 @@ const removeBookReview = async (
 
     const { id: userId } = req.user as User;
     const {
-      body: { reviewId },
+      params: { reviewId },
     } = req;
 
+    const parsedReviewId = parseInt(reviewId, 10);
+
     const review = await getRepository(Review).findOne({
-      id: reviewId,
+      id: parsedReviewId,
       userId,
     });
 

@@ -9,7 +9,8 @@ import { privateRoute } from '../../libs/auth';
 const reviewRouter = Router();
 
 reviewRouter.post('', privateRoute, addBookReview);
-reviewRouter.put('', privateRoute, modifyBookReview);
-reviewRouter.delete('', privateRoute, removeBookReview);
+
+reviewRouter.put('/:reviewId', privateRoute, modifyBookReview);
+reviewRouter.delete('/:reviewId', privateRoute, removeBookReview);
 
 export default reviewRouter;
