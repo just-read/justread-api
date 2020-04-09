@@ -8,7 +8,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToMany,
 } from 'typeorm';
+import Author from './author';
 import Rating from './rating';
 import Review from './review';
 
@@ -30,8 +32,12 @@ class Book extends BaseEntity {
   @Column({ type: 'smallint', unsigned: true, nullable: true })
   year?: number;
 
-  @Column({ type: 'varchar', length: 50, nullable: true })
-  authors!: string;
+  @ManyToMany(
+    type => Author,
+    author => author.books,
+    { cascade: true },
+  )
+  authors!: Author[];
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;

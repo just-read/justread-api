@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+import { getRepository } from 'typeorm';
+import Author from '../../entities/author';
 import Book from '../../entities/book';
 import { InvalidParamError, UnauthorizedError } from '../../libs/customErrors';
 import { isISBN } from '../../libs/validation';
@@ -9,7 +11,7 @@ interface AddNewBookRequest extends Request {
     isbn: string;
     description: string;
     year: number;
-    authors: string;
+    authorIds: number[];
   };
 }
 
@@ -24,16 +26,21 @@ const addNewBook = async (
     }
 
     const {
-      body: { title, isbn, description, year, authors },
+      body: { title, isbn, description, year, authorIds },
     } = req;
 
-    if (!title || !isbn || !authors) {
+    if (!title || !isbn || !authorIds) {
       throw new InvalidParamError('필요한 정보가 누락되었습니다.');
     }
 
     if (!isISBN(isbn)) {
       throw new InvalidParamError('유효하지 않은 ISBN입니다.');
     }
+
+    const authors = await getRepository(Author)
+      .createQueryBuilder('author')
+      .where('author.id IN :authorIds', { authorIds })
+      .getMany();
 
     const newBook = await Book.create({ title, isbn, description, year, authors }).save();
     res.status(201).json({

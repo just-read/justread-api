@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
+import Author from '../../entities/author';
 import Book from '../../entities/book';
 import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/customErrors';
 
@@ -12,7 +13,7 @@ interface ModifyBookRequest extends Request {
     isbn: string;
     description: string;
     year: number;
-    authors: string;
+    authorIds: number[];
   };
 }
 
@@ -28,10 +29,10 @@ const modifyBook = async (
 
     const {
       params: { bookId },
-      body: { title, isbn, description, year, authors },
+      body: { title, isbn, description, year, authorIds },
     } = req;
 
-    if (!bookId || !title || !isbn || !authors) {
+    if (!bookId || !title || !isbn || !authorIds) {
       throw new InvalidParamError('필요한 정보가 누락되었습니다.');
     }
 
@@ -42,6 +43,11 @@ const modifyBook = async (
     if (!existingBook) {
       throw new NotFoundError('책 정보가 존재하지 않습니다.');
     }
+
+    const authors = await getRepository(Author)
+      .createQueryBuilder('author')
+      .where('author.id IN :authorIds', { authorIds })
+      .getMany();
 
     const modifiedBook = await getRepository(Book).update(parsedBookId, {
       title,
