@@ -41,13 +41,13 @@ class User extends BaseEntity {
   @Column({ type: 'varchar', length: 30 })
   nickName!: string;
 
-  @Column({ type: 'varchar', length: 200, nullable: true })
-  avatar!: string | null;
+  @Column({ type: 'text', nullable: true })
+  avatarUrl!: string | null;
 
-  @Column({ type: 'varchar', length: 200, nullable: true })
+  @Column({ type: 'text', length: 200, nullable: true })
   shortBio!: string | null;
 
-  @Index('idx_google_id', { unique: true })
+  @Index('idx_google_id', { unique: true }) x;
   @Column({ type: 'varchar', length: 100, nullable: true, unique: true })
   googleId!: string | null;
 
@@ -57,22 +57,13 @@ class User extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
 
-  @OneToMany(
-    type => Rating,
-    rating => rating.user,
-  )
+  @OneToMany((type) => Rating, (rating) => rating.user)
   ratings!: Rating[];
 
-  @OneToMany(
-    type => Review,
-    review => review.user,
-  )
+  @OneToMany((type) => Review, (review) => review.user)
   reviews!: Review[];
 
-  @OneToMany(
-    type => Bookshelf,
-    bookshelf => bookshelf.user,
-  )
+  @OneToMany((type) => Bookshelf, (bookshelf) => bookshelf.user)
   bookshelves!: Bookshelf[];
 
   hashPassword(password: string): Promise<string> {
