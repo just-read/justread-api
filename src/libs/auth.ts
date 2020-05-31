@@ -78,6 +78,17 @@ const verifyJWTUser = async (payload: AuthTokenData, done: JWTVerifiedCallback):
   }
 };
 
+const passportAuthenticate = (req: Request, res: Response, next: NextFunction): void =>
+  passport.authenticate(['jwt'], { session: false }, (error: Error, user: User | null) => {
+    if (error) {
+      next(error);
+    }
+    if (user) {
+      req.user = user;
+    }
+    next();
+  })(req, res, next);
+
 const privateRoute = (req: Request, res: Response, next: NextFunction): void => {
   const { user } = req;
   if (!user) {
@@ -95,4 +106,4 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-export { generateToken, decodeToken, privateRoute };
+export { generateToken, decodeToken, passportAuthenticate, privateRoute };

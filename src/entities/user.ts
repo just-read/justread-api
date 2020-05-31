@@ -44,10 +44,10 @@ class User extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   avatarUrl!: string | null;
 
-  @Column({ type: 'text', length: 200, nullable: true })
+  @Column({ type: 'text', nullable: true })
   shortBio!: string | null;
 
-  @Index('idx_google_id', { unique: true }) ;
+  @Index('idx_google_id', { unique: true })
   @Column({ type: 'varchar', length: 100, nullable: true, unique: true })
   googleId!: string | null;
 

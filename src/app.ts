@@ -4,6 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import passport from 'passport';
 import { globalErrorHandler } from './libs/middlewares/globalErrorHandler';
+import { passportAuthenticate } from './libs/auth';
 import globalRouter from './routes/global';
 
 const createApp = async (): Promise<express.Application> => {
@@ -14,6 +15,7 @@ const createApp = async (): Promise<express.Application> => {
   app.use(cors());
   app.use(morgan('combined'));
   app.use(passport.initialize());
+  app.use(passportAuthenticate);
 
   app.use('', globalRouter);
 
