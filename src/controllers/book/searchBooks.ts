@@ -4,26 +4,30 @@ import Book from '../../entities/book';
 import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../libs/constants';
 import { isISBN } from '../../libs/validation';
 import { BookList } from '../../types';
+import { EnumBookListType } from '../../types/enums';
 
-interface SearchBooksRequest extends Request {
+export interface GetBooksRequest extends Request {
   query: {
-    q?: string;
-    page: number;
-    limit: number;
+    type: EnumBookListType;
+    q: string;
+    page: string;
+    limit: string;
   };
 }
 
 const searchBooks = async (
-  req: SearchBooksRequest,
+  req: GetBooksRequest,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   const {
-    query: { q: searchTerm, page = DEFAULT_PAGE, limit = DEFAULT_LIMIT },
+    query: { q: searchTerm, page, limit },
   } = req;
   if (searchTerm) {
     try {
-      const offset = (page - 1) * limit;
+      const parsedPage = page ? parseInt(page, 10) : DEFAULT_PAGE;
+      const parsedLimit = limit ? parseInt(limit, 10) : DEFAULT_LIMIT;
+      const offset = (parsedPage - 1) * parsedLimit;
 
       /**
        * 책 숫자가 많아지면 성능 저하가 있을 것으로 예상됨
@@ -44,7 +48,7 @@ const searchBooks = async (
           const [books, count] = await getRepository(Book)
             .createQueryBuilder('book')
             .where('book.isbn = :searchTerm', { searchTerm })
-            .limit(limit)
+            .limit(parsedLimit)
             .offset(offset)
             .orderBy('book.id', 'DESC')
             .getManyAndCount();
@@ -67,7 +71,7 @@ const searchBooks = async (
             .createQueryBuilder('book')
             .where('book.title LIKE :term', { term: `%${searchTerm}%` })
             .orWhere('book.authors LIKE :term', { term: `%${searchTerm}%` })
-            .limit(limit)
+            .limit(parsedLimit)
             .offset(offset)
             .orderBy('book.id', 'DESC')
             .getManyAndCount();

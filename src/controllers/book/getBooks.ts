@@ -1,47 +1,32 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
 import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../libs/constants';
 import { InvalidParamError } from '../../libs/customErrors';
 import { BookList } from '../../types';
+import { EnumBookListType } from '../../types/enums';
+import { GetBooksRequest } from './searchBooks';
 
-export enum EnumBookListType {
-  recent = 'recent',
-  popular = 'popular',
-  recommend = 'recomend',
-}
-
-interface GetBookListRequest extends Request {
-  query: {
-    type: string;
-    page: number;
-    limit: number;
-  };
-}
-
-const getBooks = async (
-  req: GetBookListRequest,
-  res: Response,
-  next: NextFunction,
-): Promise<void> => {
+const getBooks = async (req: GetBooksRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const {
-      query: { type = EnumBookListType.recent, page = DEFAULT_PAGE, limit = DEFAULT_LIMIT },
+      query: { type = EnumBookListType.recent, page, limit },
     } = req;
 
     if (!(type in EnumBookListType)) {
       throw new InvalidParamError('type이 올바르지 않습니다.');
     }
 
-    const offset = (page - 1) * limit;
+    const parsedPage = page ? parseInt(page, 10) : DEFAULT_PAGE;
+    const parsedLimit = limit ? parseInt(limit, 10) : DEFAULT_LIMIT;
+
+    const offset = (parsedPage - 1) * parsedLimit;
 
     const getRecentBookListInfo = async (): Promise<BookList> => {
-      const total = await getRepository(Book)
-        .createQueryBuilder('book')
-        .getCount();
+      const total = await getRepository(Book).createQueryBuilder('book').getCount();
       const [books, count] = await getRepository(Book)
         .createQueryBuilder('book')
-        .limit(limit)
+        .limit(parsedLimit)
         .offset(offset)
         .orderBy('book.id', 'DESC')
         .getManyAndCount();

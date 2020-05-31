@@ -7,8 +7,8 @@ import User from '../../entities/user';
 
 interface GetBookshelvesRequest extends Request {
   query: {
-    page: number;
-    limit: number;
+    page: string;
+    limit: string;
   };
 }
 
@@ -24,21 +24,18 @@ const getBookshelves = async (
 
     const { id: userId } = req.user as User;
     const {
-      query: { page = DEFAULT_PAGE, limit = DEFAULT_LIMIT },
+      query: { page, limit },
     } = req;
 
-    const offset = (page - 1) * limit;
+    const parsedPage = page ? parseInt(page, 10) : DEFAULT_PAGE;
+    const parsedLimit = limit ? parseInt(limit, 10) : DEFAULT_LIMIT;
+    const offset = (parsedPage - 1) * parsedLimit;
 
-    const total = await getRepository(Bookshelf)
+    const queryset = getRepository(Bookshelf)
       .createQueryBuilder('bookshelf')
-      .where('bookshelf.userId = :userId', { userId })
-      .getCount();
-    const [bookshelves, count] = await getRepository(Bookshelf)
-      .createQueryBuilder('bookshelf')
-      .where('bookshelf.userId = :userId', { userId })
-      .limit(limit)
-      .offset(offset)
-      .getManyAndCount();
+      .where('bookshelf.userId = :userId', { userId });
+    const total = await queryset.getCount();
+    const [bookshelves, count] = await queryset.limit(parsedLimit).offset(offset).getManyAndCount();
 
     res.status(200).json({
       success: true,
