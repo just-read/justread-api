@@ -2,8 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Author from '../../entities/author';
 import Book from '../../entities/book';
-import { InvalidParamError, UnauthorizedError } from '../../libs/customErrors';
-import { isISBN } from '../../libs/validation';
+import { InvalidParamError, UnauthorizedError } from '../../utils/errors';
+import { isISBN } from '../../utils/validation';
 
 interface AddNewBookRequest extends Request {
   body: {

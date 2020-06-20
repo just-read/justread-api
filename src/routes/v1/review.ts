@@ -4,7 +4,7 @@ import {
   removeBookReview,
   modifyBookReview,
 } from '../../controllers/reviewControllers';
-import { privateRoute } from '../../libs/auth';
+import { privateRoute } from '../../utils/auth';
 
 const reviewRouter = Router();
 

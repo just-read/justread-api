@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Author from '../../entities/author';
 import Book from '../../entities/book';
-import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/customErrors';
+import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/errors';
 
 interface ModifyBookRequest extends Request {
   params: {

@@ -8,7 +8,7 @@ import {
   removeBook,
   removeBookshelf,
 } from '../../controllers/bookshelfControllers';
-import { privateRoute } from '../../libs/auth';
+import { privateRoute } from '../../utils/auth';
 
 const bookshelfRouter = Router();
 

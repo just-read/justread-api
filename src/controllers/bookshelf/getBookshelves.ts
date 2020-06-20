@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
-import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../libs/constants';
-import { UnauthorizedError } from '../../libs/customErrors';
+import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../utils/constants';
+import { UnauthorizedError } from '../../utils/errors';
 import Bookshelf from '../../entities/bookshelf';
 import User from '../../entities/user';
 

@@ -3,8 +3,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import passport from 'passport';
-import { globalErrorHandler } from './libs/middlewares/globalErrorHandler';
-import { passportAuthenticate } from './libs/auth';
+import { globalErrorHandler } from './utils/middlewares';
+import { passportAuthenticate } from './utils/auth';
 import globalRouter from './routes/global';
 
 const createApp = async (): Promise<express.Application> => {

@@ -9,7 +9,7 @@ import {
 } from 'passport-jwt';
 import { getRepository } from 'typeorm';
 import User from '../entities/user';
-import { UnauthorizedError } from './customErrors';
+import { UnauthorizedError } from './errors';
 
 export type TokenData = {
   exp: number;

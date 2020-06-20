@@ -3,7 +3,7 @@ import { getRepository, getConnection } from 'typeorm';
 import Book from '../../entities/book';
 import Bookshelf from '../../entities/bookshelf';
 import User from '../../entities/user';
-import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../libs/customErrors';
+import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/errors';
 
 interface AddBookRequest extends Request {
   params: {
@@ -39,11 +39,7 @@ const addBook = async (req: AddBookRequest, res: Response, next: NextFunction): 
       throw new NotFoundError();
     }
 
-    await getConnection()
-      .createQueryBuilder()
-      .relation(Bookshelf, 'books')
-      .of(bookshelf)
-      .add(book);
+    await getConnection().createQueryBuilder().relation(Bookshelf, 'books').of(bookshelf).add(book);
 
     res.status(201).json({
       success: true,

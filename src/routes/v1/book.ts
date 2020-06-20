@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { privateRoute } from '../../libs/auth';
+import { privateRoute } from '../../utils/auth';
 import {
   addNewBook,
   getBookDetails,

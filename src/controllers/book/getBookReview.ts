@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
 import Rating from '../../entities/rating';
 import User from '../../entities/user';
-import { UnauthorizedError, NotFoundError } from '../../libs/customErrors';
+import { UnauthorizedError, NotFoundError } from '../../utils/errors';
 
 interface GetBookReviewRequest extends Request {
   params: {

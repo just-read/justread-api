@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
-import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../libs/constants';
-import { isISBN } from '../../libs/validation';
+import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../utils/constants';
+import { isISBN } from '../../utils/validation';
 import { BookList } from '../../types';
 import { EnumBookListType } from '../../types/enums';
 

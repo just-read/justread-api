@@ -1,8 +1,8 @@
 import { Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
-import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../libs/constants';
-import { InvalidParamError } from '../../libs/customErrors';
+import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../utils/constants';
+import { InvalidParamError } from '../../utils/errors';
 import { BookList } from '../../types';
 import { EnumBookListType } from '../../types/enums';
 import { GetBooksRequest } from './searchBooks';

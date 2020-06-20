@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Book from '../../entities/book';
-import { NotFoundError } from '../../libs/customErrors';
+import { NotFoundError } from '../../utils/errors';
 
 interface GetBookDetailsRequest extends Request {
   params: {
