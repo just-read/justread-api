@@ -99,12 +99,12 @@ class User extends BaseEntity {
 
     if (diff < 1000 * 60 * 60 * 24 * 3) {
       refreshToken = await generateToken(this, {
-        subject: 'refresh_token',
+        subject: 'refreshToken',
         expiresIn: '30d',
       });
     }
     const accessToken = await generateToken(this, {
-      subject: 'access_token',
+      subject: 'accessToken',
       expiresIn: '1h',
     });
 
