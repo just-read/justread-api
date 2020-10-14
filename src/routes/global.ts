@@ -4,7 +4,7 @@ import v1Router from './v1';
 const globalRouter = Router();
 
 globalRouter.get('/', (_: Request, res: Response) => {
-  res.send({
+  res.json({
     success: true,
     message: 'JustRead API',
   });

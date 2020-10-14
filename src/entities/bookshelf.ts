@@ -30,13 +30,10 @@ class Bookshelf extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
 
-  @ManyToOne(
-    type => User,
-    user => user.ratings,
-  )
+  @ManyToOne((type) => User, (user) => user.ratings)
   user!: User;
 
-  @ManyToMany(type => Book)
+  @ManyToMany((type) => Book)
   @JoinTable()
   books!: Book[];
 }
