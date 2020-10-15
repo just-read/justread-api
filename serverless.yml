@@ -5,27 +5,29 @@ plugins:
   - serverless-prune-plugin
 
 custom:
-  defaultStage: dev
-  currentStage: ${opt:stage, self:custom.defaultStage}
   prune:
     automatic: true
     number: 3
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs12.x
+  stage: ${opt.stage, 'dev'}
   region: ap-northeast-2
-  stage: ${self:custom.currentStage}
+  stackName: justread-api
+  apiName: justread-api
+  memorySize: 128
+  timeout: 5
   deploymentBucket:
-    name: justread-api
-  memorySize: 256
-  timeout: 3
+    name: best.justread.api.${self.provider.region}.deploys
+    maxPreviousDeploymentArtifacts: 5 # On every deployment the framework prunes the bucket to remove artifacts older than this limit. The default is 5
   environment:
     TZ: Asia/Seoul
 
 functions:
   app:
     handler: build/serverless.handler
+    description: JustRead REST API
     events:
       - http:
           path: /
