@@ -31,9 +31,9 @@ functions:
     events:
       - http:
           path: /
-          method: ANY
+          method: any
           cors: true
       - http:
           path: /{any+}
-          method: ANY
+          method: any
           cors: true
