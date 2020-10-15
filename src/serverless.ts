@@ -1,11 +1,10 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
-import serverless from 'serverless-http';
+import serverless, { Handler } from 'serverless-http';
 import createApp from './app';
 import Database from './database';
 
-let serverlessApp: serverless.Handler;
+let serverlessApp: Handler;
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
+export const handler: Handler = async (event, context) => {
   if (!serverlessApp) {
     const app = await createApp();
     serverlessApp = serverless(app);
