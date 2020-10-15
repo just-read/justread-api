@@ -2,7 +2,6 @@ service: justread-api
 
 plugins:
   - serverless-offline
-  - serverless-prune-plugin
 
 custom:
   prune:
