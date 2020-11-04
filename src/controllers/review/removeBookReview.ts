@@ -20,9 +20,9 @@ const removeBookReview = async (
       throw new UnauthorizedError();
     }
 
-    const { id: userId } = req.user as User;
     const {
       params: { reviewId },
+      user: { id: userId },
     } = req;
 
     const parsedReviewId = parseInt(reviewId, 10);

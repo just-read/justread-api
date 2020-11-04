@@ -20,10 +20,10 @@ const addBook = async (req: AddBookRequest, res: Response, next: NextFunction): 
       throw new UnauthorizedError();
     }
 
-    const { id: userId } = req.user as User;
     const {
       params: { bookshelfId },
       body: { bookId },
+      user: { id: userId },
     } = req;
 
     if (!bookshelfId || !bookId) {

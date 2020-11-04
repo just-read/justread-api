@@ -23,10 +23,10 @@ const modifyBookReview = async (
       throw new UnauthorizedError();
     }
 
-    const { id: userId } = req.user as User;
     const {
       params: { reviewId },
       body: { reviewContent },
+      user: { id: userId },
     } = req;
 
     const parsedReviewId = parseInt(reviewId, 10);

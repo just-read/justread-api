@@ -22,9 +22,9 @@ const getBookshelves = async (
       throw new UnauthorizedError();
     }
 
-    const { id: userId } = req.user as User;
     const {
       query: { page, limit },
+      user: { id: userId },
     } = req;
 
     const parsedPage = page ? parseInt(page, 10) : DEFAULT_PAGE;

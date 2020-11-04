@@ -23,9 +23,9 @@ const addBookReview = async (
       throw new UnauthorizedError();
     }
 
-    const { id: userId } = req.user as User;
     const {
       body: { bookId, reviewContent },
+      user: { id: userId },
     } = req;
 
     const book = await getRepository(Book).findOne(bookId);

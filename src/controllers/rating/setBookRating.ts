@@ -22,9 +22,9 @@ const setBookRating = async (
       throw new UnauthorizedError('인증 정보가 없습니다.');
     }
 
-    const { id: userId } = req.user as User;
     const {
       body: { bookId, rating },
+      user: { id: userId },
     } = req;
 
     if (!bookId || !rating) {

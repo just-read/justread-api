@@ -21,8 +21,6 @@ const getBookReview = async (
     if (!req.user) {
       throw new UnauthorizedError();
     }
-
-    const user = req.user as User;
     const {
       params: { bookId },
     } = req;

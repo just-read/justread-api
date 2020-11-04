@@ -17,9 +17,9 @@ const createNewBookshelf = async (
       throw new UnauthorizedError('인증 정보가 존재하지 않습니다');
     }
 
-    const { id: userId } = req.user as User;
     const {
       body: { name },
+      user: { id: userId },
     } = req;
 
     if (!name) {

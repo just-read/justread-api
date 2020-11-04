@@ -20,9 +20,9 @@ const removeRating = async (
       throw new UnauthorizedError('인증 정보가 없습니다.');
     }
 
-    const { id: userId } = req.user as User;
     const {
       params: { ratingId },
+      user: { id: userId },
     } = req;
 
     if (!ratingId) {
