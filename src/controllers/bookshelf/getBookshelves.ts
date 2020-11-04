@@ -3,7 +3,6 @@ import { getRepository } from 'typeorm';
 import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../utils/constants';
 import { UnauthorizedError } from '../../utils/errors';
 import Bookshelf from '../../entities/bookshelf';
-import User from '../../entities/user';
 
 interface GetBookshelvesRequest extends Request {
   query: {

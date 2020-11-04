@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import Bookshelf from '../../entities/bookshelf';
-import User from '../../entities/user';
 import { UnauthorizedError, InvalidParamError } from '../../utils/errors';
 
 interface CreateNewBookshelfRequest extends Request {
