@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
-import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../utils/constants';
-import { UnauthorizedError } from '../../utils/errors';
-import Bookshelf from '../../entities/bookshelf';
+import { DEFAULT_PAGE, DEFAULT_LIMIT } from 'utils/constants';
+import { UnauthorizedError } from 'utils/errors';
+import Bookshelf from 'entities/bookshelf';
 
 interface GetBookshelvesRequest extends Request {
   query: {

@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
-import User from '../../entities/user';
-import { UnauthorizedError } from '../../utils/errors';
-import { verifyGoogleToken } from '../../utils/validation';
+import User from 'entities/user';
+import { UnauthorizedError } from 'utils/errors';
+import { verifyGoogleToken } from 'utils/validation';
 
 interface GoogleLogInRequest extends Request {
   body: {

@@ -1,10 +1,5 @@
 import { Router } from 'express';
-import {
-  emailLogIn,
-  emailSignUp,
-  googleLogIn,
-  refreshTokens,
-} from '../../controllers/authControllers';
+import { emailLogIn, emailSignUp, googleLogIn, refreshTokens } from 'controllers/authControllers';
 
 const authRouter = Router();
 

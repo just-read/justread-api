@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import User from '../../entities/user';
-import { InvalidParamError, IncorrectLoginRequestError, NotFoundError } from '../../utils/errors';
+import User from 'entities/user';
+import { InvalidParamError, IncorrectLoginRequestError, NotFoundError } from 'utils/errors';
 
 interface LogInRequest extends Request {
   body: {

@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
-import Book from '../../entities/book';
-import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../utils/constants';
-import { isISBN } from '../../utils/validation';
-import { BookList } from '../../types';
-import { EnumBookListType } from '../../types/enums';
+import Book from 'entities/book';
+import { DEFAULT_PAGE, DEFAULT_LIMIT } from 'utils/constants';
+import { isISBN } from 'utils/validation';
+import { BookList } from 'types';
+import { EnumBookListType } from 'types/enums';
 
 export interface GetBooksRequest extends Request {
   query: {

@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
-import User from '../../entities/user';
-import { InvalidParamError, NotFoundError } from '../../utils/errors';
-import Rating from '../../entities/rating';
-import Review from '../../entities/review';
-import Book from '../../entities/book';
+import User from 'entities/user';
+import { InvalidParamError, NotFoundError } from 'utils/errors';
+import Rating from 'entities/rating';
+import Review from 'entities/review';
+import Book from 'entities/book';
 
 interface GetProfile extends Request {
   params: {

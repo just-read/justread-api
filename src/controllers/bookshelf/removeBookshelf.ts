@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
-import Bookshelf from '../../entities/bookshelf';
-import { UnauthorizedError, InvalidParamError, NotFoundError } from '../../utils/errors';
+import Bookshelf from 'entities/bookshelf';
+import { UnauthorizedError, InvalidParamError, NotFoundError } from 'utils/errors';
 
 interface RemoveBookshelfRequest extends Request {
   params: {

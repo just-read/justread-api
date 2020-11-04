@@ -1,4 +1,4 @@
-import Book from '../entities/book';
+import Book from 'entities/book';
 
 interface BookList {
   books: Book[];
