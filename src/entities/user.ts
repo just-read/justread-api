@@ -13,7 +13,7 @@ import {
 } from 'typeorm';
 import bcrypt from 'bcrypt';
 import { IsEmail } from 'class-validator';
-import { generateToken } from 'utils/auth';
+import { generateToken } from '../utils/auth';
 import Rating from './rating';
 import Review from './review';
 import Bookshelf from './bookshelf';

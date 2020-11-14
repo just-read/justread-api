@@ -1,7 +1,9 @@
-import Book from 'entities/book';
+import Book from '../entities/book';
 
-interface BookList {
-  books: Book[];
-  total: number;
-  count: number;
+declare global {
+  interface BookList {
+    books: Book[];
+    total: number;
+    count: number;
+  }
 }

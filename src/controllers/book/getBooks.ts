@@ -1,10 +1,9 @@
 import { Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
-import Book from 'entities/book';
-import { DEFAULT_PAGE, DEFAULT_LIMIT } from 'utils/constants';
-import { InvalidParamError } from 'utils/errors';
-import { BookList } from 'types';
-import { EnumBookListType } from 'types/enums';
+import Book from '../../entities/book';
+import { EnumBookListType } from '../../types/enums';
+import { DEFAULT_PAGE, DEFAULT_LIMIT } from '../../utils/constants';
+import { InvalidParamError } from '../../utils/errors';
 import { GetBooksRequest } from './searchBooks';
 
 const getBooks = async (req: GetBooksRequest, res: Response, next: NextFunction): Promise<void> => {

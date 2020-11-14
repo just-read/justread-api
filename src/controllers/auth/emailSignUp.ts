@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import User from 'entities/user';
-import { AlreadyExistsError, InvalidParamError } from 'utils/errors';
+import User from '../../entities/user';
+import { AlreadyExistsError, InvalidParamError } from '../../utils/errors';
 
 interface SignUpRequest extends Request {
   body: {

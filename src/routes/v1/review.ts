@@ -1,6 +1,10 @@
 import { Router } from 'express';
-import { addBookReview, removeBookReview, modifyBookReview } from 'controllers/reviewControllers';
-import { privateRoute } from 'utils/auth';
+import {
+  addBookReview,
+  removeBookReview,
+  modifyBookReview,
+} from '../../controllers/reviewControllers';
+import { privateRoute } from '../../utils/auth';
 
 const reviewRouter = Router();
 

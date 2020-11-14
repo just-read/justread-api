@@ -7,8 +7,8 @@ import {
   modifyBookshelf,
   removeBook,
   removeBookshelf,
-} from 'controllers/bookshelfControllers';
-import { privateRoute } from 'utils/auth';
+} from '../../controllers/bookshelfControllers';
+import { privateRoute } from '../../utils/auth';
 
 const bookshelfRouter = Router();
 
