@@ -4,7 +4,7 @@ import User from '../../entities/user';
 import { UnauthorizedError } from '../../utils/errors';
 import { verifyGoogleToken } from '../../utils/validation';
 
-interface GoogleLogInRequest extends Request {
+interface GoogleSignInRequest extends Request {
   body: {
     email: string;
     nickName: string;
@@ -13,8 +13,8 @@ interface GoogleLogInRequest extends Request {
   };
 }
 
-const googleLogIn = async (
-  req: GoogleLogInRequest,
+const googleSignIn = async (
+  req: GoogleSignInRequest,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
@@ -54,4 +54,4 @@ const googleLogIn = async (
   }
 };
 
-export default googleLogIn;
+export default googleSignIn;
