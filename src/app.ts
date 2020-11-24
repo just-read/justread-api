@@ -3,9 +3,10 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import passport from 'passport';
-import { globalErrorHandler } from './utils/middlewares';
-import { passportAuthenticate } from './utils/auth';
 import globalRouter from './routes/global';
+import { passportAuthenticate } from './utils/auth';
+import { globalErrorHandler } from './utils/middlewares';
+import { initSentryBeforeRoutes, initSentryAfterRoutes } from './utils/sentry';
 
 const createApp = async (): Promise<express.Application> => {
   const app = express();
@@ -16,9 +17,11 @@ const createApp = async (): Promise<express.Application> => {
   app.use(morgan('combined'));
   app.use(passport.initialize());
   app.use(passportAuthenticate);
+  initSentryBeforeRoutes(app);
 
   app.use('', globalRouter);
 
+  initSentryAfterRoutes(app);
   app.use(globalErrorHandler);
 
   return app;
