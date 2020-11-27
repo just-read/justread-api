@@ -32,7 +32,7 @@ class Book extends BaseEntity {
   @Column({ type: 'smallint', unsigned: true, nullable: true })
   year?: number;
 
-  @ManyToMany((type) => Author, (author) => author.books, { cascade: true })
+  @ManyToMany(() => Author, (author) => author.books, { cascade: true })
   authors!: Author[];
 
   @CreateDateColumn({ type: 'timestamptz' })
@@ -41,10 +41,10 @@ class Book extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
 
-  @OneToMany((type) => Rating, (rating) => rating.book)
+  @OneToMany(() => Rating, (rating) => rating.book)
   ratings!: Rating[];
 
-  @OneToMany((type) => Review, (review) => review.book)
+  @OneToMany(() => Review, (review) => review.book)
   reviews!: Review[];
 }
 

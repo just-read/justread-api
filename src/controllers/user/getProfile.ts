@@ -42,7 +42,7 @@ const getProfile = async (req: GetProfile, res: Response, next: NextFunction): P
 
     const recentRatedBooks = await getRepository(Book)
       .createQueryBuilder('book')
-      .innerJoin(Rating, 'rating')
+      .innerJoin('book.ratings', 'rating')
       .where('rating.userId = :userId', { userId: parsedUserId })
       .limit(3)
       .orderBy('rating.id', 'DESC')

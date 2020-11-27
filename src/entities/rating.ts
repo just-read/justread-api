@@ -33,13 +33,13 @@ class Rating extends BaseEntity {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
 
-  @ManyToOne((type) => User, (user) => user.ratings)
+  @ManyToOne(() => User, (user) => user.ratings)
   user!: User;
 
-  @ManyToOne((type) => Book, (book) => book.ratings)
+  @ManyToOne(() => Book, (book) => book.ratings)
   book!: Book;
 
-  @OneToOne((type) => Review, (review) => review.rating)
+  @OneToOne(() => Review, (review) => review.rating)
   review?: Review;
 }
 
