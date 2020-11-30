@@ -1,4 +1,5 @@
 service: justread-api
+useDotenv: true
 
 plugins:
   - serverless-offline
@@ -6,14 +7,14 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: ${opt.stage, 'dev'}
+  stage: ${opt:stage, 'dev'}
   region: ap-northeast-2
   stackName: justread-api
   apiName: justread-api
   memorySize: 128
   timeout: 5
   deploymentBucket:
-    name: best.justread.api.${self.provider.region}.deploys
+    name: best.justread.api.${self:provider.region}.deploys
     maxPreviousDeploymentArtifacts: 5 # On every deployment the framework prunes the bucket to remove artifacts older than this limit. The default is 5
   environment:
     TZ: Asia/Seoul
