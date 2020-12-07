@@ -1,6 +1,10 @@
 service: justread-api
 useDotenv: true
 
+custom:
+  serverless-offline:
+    noPrependStageInUrl: true
+
 plugins:
   - serverless-offline
 

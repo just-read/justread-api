@@ -3,6 +3,7 @@ version: '3.7'
 services:
   db:
     image: postgres:10
+    container_name: justread-db
     restart: always
     environment:
       - POSTGRES_DB=justread
@@ -24,8 +25,6 @@ services:
       dockerfile: ./Dockerfile
     image: justread-api:0.1.0
     container_name: justread-api
-    environment:
-      - PORT=4000
     ports:
       - '4000:4000'
     depends_on:
@@ -35,6 +34,7 @@ services:
     volumes:
       - ./src:/usr/app/src
     environment:
+      - PORT=4000
       - DB_ENDPOINT=db
       - DB_USERNAME=justread
       - DB_PASSWORD=justread-db
