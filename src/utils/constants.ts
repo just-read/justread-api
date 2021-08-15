@@ -1,4 +1,0 @@
-const DEFAULT_PAGE = 1;
-const DEFAULT_LIMIT = 10;
-
-export { DEFAULT_PAGE, DEFAULT_LIMIT };
